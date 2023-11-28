@@ -1,5 +1,11 @@
 # Environnement de développement
 
+:::{hint}Objectifs de cette partie
+- Définir ce qu'est un environnement de développement
+- Présenter les différents modèles
+- Comprendre les enjeux associés
+- Utiliser pixi pour illustrer la mise en place d'un environnement de développement
+:::
 
 ## Présentation générale
 
@@ -102,7 +108,7 @@ La commande `run` est suivie de la commande que vous voulez exécuter dans l'env
 pixi run cmake --version
 ```
 
-alors que la commande `shell` vous place directement dans un shell lié à l'environnement où vous pouvez exécuter un ensemble de commandes. Par exemple
+alors que la commande `shell` vous place directement dans un shell lié à l'environnement dans lequel vous pouvez exécuter un ensemble de commandes. Par exemple
 
 ```shell
 pixi shell
@@ -144,6 +150,6 @@ Nous allons par la suite utiliser ces tâches pour décrire comment compiler le 
 
 ## Conclusion
 
-Le cadre mis en place ici permet à toute nouvelle personne souhaitant contribuer au projet de facilement être autonome et opérationnel et d'exécuter exactement le même processus que vous avez en tête. Le gain de temps est énorme et ce processus permet d'éviter le découragement des bonnes volontés.
+Le cadre mis en place ici permet à toute nouvelle personne souhaitant contribuer au projet de facilement être autonome et opérationnel grâce à l'installation d'un environnement de développement sur sa propre machine. La description des tâches possibles permet d'exécuter exactement le même processus que celui que vous avez mis en place et que vous utilisez à chaque changement. Le gain de temps est énorme et ce processus bien structuré et reproductible permet d'éviter le découragement des bonnes volontés.
 
 Nous avons donné quelques exemples d'outils affiliés ou non à des langages de programmation. N'hésitez pas à faire des recherches pour votre langage préféré. Vous devriez trouver votre bonheur.
