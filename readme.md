@@ -4,7 +4,6 @@ La philosophie et la structure d’un logiciel émanent de ses précurseurs et �
 
 Lors du processus de développement, de nombreuses tâches sont répétitives et peuvent être source d’erreurs ou de régressions de l’application. On peut parler ici des tests unitaires, mais aussi du formatage de code, des erreurs pouvant être révélées lors de l’analyse statique, de la génération de la documentation, de la création de nouvelles versions avec la distribution de l’application via des systèmes de packaging (pypi, conda, vcpkg, spack, nix, guix, …).
 
-La première demi-journée sera constituée d’interventions qui présentent les différentes étapes d’un développement de logiciel open source en discutant du cadre pertinent à mettre en place. Un temps d’échange avec les participants clôturera cette première partie. La seconde demi-journée sera plus en mode TP où il sera proposé aux participants de manipuler les github actions pour l’automatisation de ces tâches répétitives. La mise en place et l'exécution d'un processus similaire sur un serveur gitlab couplée à une infrastructure d'exécution de tests seront également proposés sous forme de démonstration.
-
+Ce répertoire est le contenu d'un atelier proposant de réfléchir à l'ensemble des actions pouvant rendre la vie des différents acteurs (mainteneurs, développeurs, utilisateurs, ...) plus agréable. Nous utiliserons github actions pour l’automatisation de certaines de ces tâches répétitives.
 
 https://gouarin.github.io/dev_env_and_automatisation/
