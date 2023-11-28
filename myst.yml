@@ -1,0 +1,21 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  title: "Distribuer son application python"
+  keywords: []
+  authors:
+    - name: Loïc Gouarin
+      affiliation: CMAP/CNRS/Ecole polytechnique
+  github: https://github.com/gouarin/automation4opensource
+  license:
+    code: MIT
+    content: CC-BY-4.0
+site:
+  template: book-theme
+  title: "Cadre de développement et automatisation pour l'open source"
+  # logo:
+  nav: []
+  # actions:
+  #   - title: Learn More
+  #     url: https://mystmd.org/guide
+  domains: []

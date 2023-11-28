@@ -1,0 +1,12 @@
+format: jb-book
+root: index
+parts:
+  # - caption: Plan de l'atelier
+  #   chapters:
+  #     - file: plan
+  # - caption: Présentation générale
+  #   chapters:
+  #     - file: talk
+  - caption: Session pratique
+    chapters:
+      - file: practical_session/00-environment
