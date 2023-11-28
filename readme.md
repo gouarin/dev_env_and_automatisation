@@ -1,6 +1,4 @@
----
-title: Cadre de développement et automatisation pour l'open source
----
+# Cadre de développement et automatisation pour l'open source
 
 Le développement de logiciels open source en simulation numérique prend une part de plus en plus importante dans le processus de recherche. Il permet de valider les méthodes numériques, de développer de nouveaux algorithmes et de permettre à n’importe qui de s’approprier les méthodes et de les enrichir. Ouvrir nos codes de recherche fait également partie de la démarche de science ouverte et il ne s’agit pas de “juste” mettre une archive avec les sources sur une page web.
 
@@ -10,9 +8,5 @@ Lors du processus de développement, de nombreuses tâches sont répétitives et
 
 La première demi-journée sera constituée d’interventions qui présentent les différentes étapes d’un développement de logiciel open source en discutant du cadre pertinent à mettre en place. Un temps d’échange avec les participants clôturera cette première partie. La seconde demi-journée sera plus en mode TP où il sera proposé aux participants de manipuler les github actions pour l’automatisation de ces tâches répétitives. La mise en place et l'exécution d'un processus similaire sur un serveur gitlab couplée à une infrastructure d'exécution de tests seront également proposés sous forme de démonstration.
 
-## Objectifs
 
-- Améliorer et sécuriser son processus de développement
-- Diffuser son travail de manière semi automatique et l’ouvrir au plus grand nombre
-- Comprendre le fonctionnement de github actions
-- Acquérir une autonomie pour mettre en place ses propres workflows
+https://gouarin.github.io/dev_env_and_automatisation/
