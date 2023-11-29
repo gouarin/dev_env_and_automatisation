@@ -11,3 +11,4 @@ parts:
     chapters:
       - file: practical_session/00-environment
       - file: practical_session/01-depot
+      - file: practical_session/communication

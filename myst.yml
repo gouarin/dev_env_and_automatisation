@@ -10,11 +10,17 @@ project:
   license:
     code: MIT
     content: CC-BY-4.0
+  # thumbnail: logo-wide.svg
+
 site:
   template: book-theme
   title: "Cadre de développement et automatisation pour l'open source"
-  # logo:
-  nav: []
+  # logo: Logo_noir.png
+  # nav:
+  #   - title: test
+  #     children:
+  #       - title: dépot
+  #         url: /depot
   # actions:
   #   - title: Learn More
   #     url: https://mystmd.org/guide

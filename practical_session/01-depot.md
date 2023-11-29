@@ -63,8 +63,58 @@ Les commits sont rangés selon des catégories. Nous retrouvons le titre de la p
 
 Là encore, nous pouvons mettre un cadre qui fait que la génération du changelog est automatique et s'appuie sur les titres des pull requests qui auront été injectées dans la branche principale.
 
-Ce cadre est mis en place à partir de la règle des [commit conventionnels](https://www.conventionalcommits.org). L'idée est d'apporter de l'information dans le titre d'un commit ou de la pull request pour catégoriser les changements qui sont faits.
+Ce cadre est mis en place à partir de la règle des [commit conventionnels](https://www.conventionalcommits.org). L'idée est d'apporter de l'information dans le titre d'un commit ou de la pull request pour catégoriser les changements qui sont faits. Cette convention suit également [SemVer](https://semver.org/lang/) que nous verrons un peu plus tard dans l'atelier et qui nous permettra d'incrémenter la version de notre application ou de notre librairie en fonction de la nature des changements effectués.
 
+Le message du commit doit être structuré comme suit
 
+```text
+<type>[étendue optionnelle]: <description>
 
-<!-- github discussion -->
+[corps optionnel]
+
+[pied optionnel]
+```
+
+Le type définit la catégorie du changement. Il peut prendre les valeurs
+
+```
+'build',
+'chore',
+'ci',
+'docs',
+'feat',
+'fix',
+'perf',
+'refactor',
+'revert',
+'style',
+'test'
+```
+
+L'étendue qui est optionnelle permet de donner un peu plus de détail sur la partie du projet qui est impactée. Nous donnons ici quelques exemples qui sont directement pris du site https://www.conventionalcommits.org.
+
+- Message du commit avec description et breaking change dans le pied
+
+    ```text
+    feat: allow provided config object to extend other configs
+
+    BREAKING CHANGE: `extends` key in config file is now used for extending other config files
+    ```
+
+- Message du commit sans corps
+
+    ```text
+    docs: correct spelling of CHANGELOG
+    ```
+
+- Message du commit avec étendue
+
+    ```
+    feat(lang): add polish language
+    ```
+Nous verrons lors de l'utilisation de github-actions comment vérifier que le message de la pull request suit bien cette convention et comment générer automatiquement le changelog et le numéro de montée en version lors de la création d'une nouvelle version.
+
+:::{note} Remarque
+L'utilisation des commits conventionnels permet d'une certaine manière de faciliter la communication entre les différents acteurs qui gravitent autour du développement open source de votre projet. Il en existe bien d'autres et c'est l'objet du chapitre [](communication).
+:::
+
