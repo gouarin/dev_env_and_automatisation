@@ -58,13 +58,18 @@ Si c'est la première vue de votre logiciel, vous comprendrez bien qu'il est imp
 Voici quelques éléments qui devraient faire partie de votre `readme`:
 
 - Le nom du projet
-- Une descritpion du projet
+- Une description du projet
 - Des badges permettant d'accéder facilement à la documentation, aux tests, aux packages, ...
 - Un guide sur l'installation
 - Un exemple d'utilisation
 - Où aller pour plus d'informations
 - Comment contribuer
 - Une feuille de route du projet (où nous souhaitons aller)
+
+:::{attention}
+Le `readme` n'est pas la documentation de votre logiciel. Il ne doit donc pas être trop long, mais assez complet pour trouver de l'information rapidement.
+
+:::
 
 ## Comment installer ce logiciel ?
 
@@ -84,15 +89,82 @@ Ils permettent de développer rapidement des tableaux de bord à l'aide de noteb
 
 ## Comment se servir de ce logiciel ?
 
-La deuxième étape (une fois que la personne veut en savoir un peu plus) repose sur la documentation
+La deuxième étape (une fois que la personne veut en savoir un peu plus) repose sur la documentation. Il existe différentes formes de documentation à destination d'acteurs différents : un utilisateur débutant, un utilisateur confirmé, un contributeur, un relecteur, ... Mais il est néanmoins préférable d'avoir un unique espace où trouver celle-ci. Avant de parler des outils, revenons sur son contenu. Vous avez une très bonne ressource qui vous donne un tas d'informations sur la création de la documentation d'un logiciel : [Write the Docs](https://www.writethedocs.org/guide/). Vous avez également ce très bon livre [Docs for Developpers](https://docsfordevelopers.com/).
 
+Les différentes parties de la documentation peuvent se résumer ainsi (elles se trouvent dans le livre cité précédemment)
 
-## Une question, un problème ?
+- Une partie **débuter** (*getting started*) qui permet de se faire une première impression.
+- Une **documentation conceptuelle** qui explique les idées et les concepts du logiciel.
+- Une **documentation procédurale** qui contient
+  - des **tutoriels** qui expliquent comment résoudre un problème à l'aide du logiciel,
+  - des **comment faire ?** (*how-to*) qui expliquent les différentes étapes à réaliser pour atteindre un objectif.
+- Une **documentation de référence** qui contient
+  - une documentation de l'**API**
+  - une documentation sur la **résolution des problèmes**
+  - une documentation sur **comment contribuer**
 
-## Une contribution ?
+Pour faciliter l'écriture et rendre disponible cette documentation, vous avez à votre disposition de nombreux outils. En calcul scientifique, [sphinx](https://www.sphinx-doc.org) est très utilisé pour l'écriture et la génération de la documentation en différents formats (html, pdf, epub, ...). Il peut faire le lien avec les docstrings de Python, mais également la documentation de l'API réalisée avec [doxygen](https://www.doxygen.nl/) au travers de l'extension [breathe](https://breathe.readthedocs.io). L'écriture des autres documentations peut se faire en utilisant des fichiers markdowns, reStructuredText ou des notebooks Jupyter.
+
+:::{tip}MyST
+MyST permet d'écrire en markdown tout en offrant une flexibilité que le format reStructuredText offre. Ce document est d'ailleurs rédigé en l'utilisant. Pour plus d'information https://mystmd.org.
+:::
+
+Une fois que la documentation est bien générée localement, vous pouvez la rendre disponible en ligne en utilisant [Read the Docs](https://readthedocs.org) ou [Github Pages](https://pages.github.com/). Nous verrons la deuxième possibilité en utilisant github actions.
+
+Nous avons vu jusqu'à présent comment, à partir d'un ensemble de documents, orienter les acteurs au mieux. Mais, que ce passe t-il s'ils n'ont pas trouvé ce qu'ils cherchaient ? Comment peuvent-ils rentrer en contact avec vous et échanger ? C'est l'objet des trois prochaines parties.
 
 ## Les règles de bonne conduite
 
+Avant tout échange, il est bon de rappeler comment vous devez vous comporter et comment les autres personnes doivent également se comporter. Offrir un espace bienveillant et sécurisant est important pour ses contributeurs et sa communauté. Pour ce faire, la plupart des dépôts sur github ayant une forte audience ont un code de conduite (*code of conduct*).
 
+:::{tip} Code of conduct
+Pour plus d'informations et avoir un modèle dans différents formats : https://www.contributor-covenant.org/.
+:::
+
+## Une question, un problème ?
+
+Un utilisateur trouve un bug dans le logiciel et souhaite vous en avertir. Il peut bien évidemment ouvrir une issue sur github mais que doit-il écrire ? Sera-t-il assez clair pour que vous ne deviez pas échanger une dizaine de messages avant de comprendre de quoi il s'agit ?
+
+Souhaitez-vous que les questions en tout genre, la demande d'ajout de nouvelles fonctionnalités se retrouvent toutes dans les issues de votre dépôt ? Si les demandes de nouvelles fonctionnalités ou les rapports de bug sont éphémères : une fois que c'est fait, on n'en parle plus. Certaines questions sont intéressantes à garder. Rappelons que lorsque l'issue est fermée, vous ne la voyez plus sur votre dépôt sauf si vous allez dans celles qui sont fermées.
+
+La question est donc : est-ce que l'on peut orienter les acteurs pour qu'ils prennent les bons chemins en cas de problème ?
+
+Github offre la possibilité de mettre en place des templates pour les issues et pour les pull requests. Nous verrons ici que la partie issue, car elle est plus flexible (pour le moment) que la partie pull request. En effet, vous pouvez créer des formulaires en utilisant des fichiers `yaml`. Vous pouvez trouver les informations sur [Configuring issue templates for your repository](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository).
+
+Voici un exemple de ce qui peut être mis en place lorsqu'une personne clique sur l'onglet `issue` de votre dépôt
+
+```{image} figures/issue_template.png
+:align: center
+```
+
+Et si elle clique sur `Bug Report`, elle se retrouve devant un formulaire de ce type
+
+```{image} figures/bug_report.png
+:align: center
+```
+
+Il est important de noter que nous avons mis un cadre : nous essayons d'aiguiller la personne le plus possible afin qu'elle se sente à l'aise pour trouver son chemin et qu'elle sache comment initier un dialogue avec vous en fournissant un certain nombre d'éléments. Vous avez gagné un temps précieux et elle aussi.
+
+## Une contribution ?
+
+Enfin, il est également important de savoir comment contribuer au projet, quel est le cadre. Contribuer à un projet prend du temps et il est donc primordial de perdre le moins de temps possible pour s'approprier la structure globale du projet, sa philosophie de développement et son fonctionnement. Pour cela, vous pouvez ajouter un fichier `CONTRIBUTING.md` dans lequel vous pouvez mettre
+
+- un message de bienvenue
+- une table des matières si le document est trop grand
+- des informations sur comment mettre en place l'environnement de développement
+- une description sur la mise en place des tests et comment en écrire d'autres
+- un protocole pour soumettre sa contribution
+- les façons de contribuer autres que du code
+- ...
+
+Voici un exemple : le fichier `CONTRIBUTING.md` de scikit-learn
+
+```{image} figures/scikit-learn-contributing.png
+:align: center
+```
+
+:::{tip} Templates
+Si vous recherchez des templates pour toutes les étapes introduites dans ce chapitre ou pour d'autres choses en lien avec la documentation d'un projet open source, vous pouvez aller voir [The Good Docs Project](https://thegooddocsproject.dev/) et ses [templates](https://gitlab.com/tgdp/templates).
+:::
 
 <!-- github discussion -->
