@@ -118,3 +118,16 @@ Nous verrons lors de l'utilisation de github-actions comment vérifier que le me
 L'utilisation des commits conventionnels permet d'une certaine manière de faciliter la communication entre les différents acteurs qui gravitent autour du développement open source de votre projet. Il en existe bien d'autres et c'est l'objet du chapitre [](communication).
 :::
 
+## Autres fonctionnalités
+
+Vous pouvez également configurer d'autres fonctionnalités qui permettent aux visiteurs de ne pas se tromper de chemin. Par exemple, si votre documentation est sur [Read the Docs](https://readthedocs.org) ou générée via [Github Pages](https://pages.github.com/), il n'est peut-être pas nécessaire d'avoir un `wiki`.
+
+Vous pouvez également avoir envie d'avoir un espace où les personnes peuvent échanger entre elles soit sous la forme d'un forum comme le propose [discourse](https://www.discourse.org/), soit sous la forme d'un chat comme le propose [discord](https://discord.com/) ou [element](https://element.io/). Si vous cherchez la première forme, vous devriez vous pencher sur [Github Discussions](https://docs.github.com/fr/discussions).
+
+Dans tous les cas, vous pouvez retourner dans les `Settings` de votre dépôt dans la partie `General`, il y a une section `Features`. Nous allons ici retirer le `wiki` et activer les discussions.
+
+```{image} figures/discussions.png
+:align: center
+```
+
+Dans la barre du haut, vous devriez voir disparaître l'onglet `Wiki` et apparaître l'onglet `Discussions`.
