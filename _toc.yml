@@ -10,3 +10,4 @@ parts:
   - caption: Session pratique
     chapters:
       - file: practical_session/00-environment
+      - file: practical_session/01-depot
