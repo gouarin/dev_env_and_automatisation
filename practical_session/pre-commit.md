@@ -96,4 +96,41 @@ Use -header-filter=.* to display errors from all non-system headers. Use -system
 Found compiler error(s).
 ```
 
-La mise en place de ces outils vous fera gagner un temps inestimable et vous fera monter en compétences ainsi que votre communauté. En effet, en fonction des dysfonctionnements remontés, vous allez vous habituer et vous serez beaucoup plus vigilant lors de l'écriture du code.
+La mise en place de ces outils vous fera gagner un temps inestimable et vous fera monter en compétences ainsi que votre communauté. En effet, en fonction des dysfonctionnements remontés, vous allez vous habituer à observer et à les identifier. Vous serez beaucoup plus vigilant lors de l'écriture du code.
+
+Il nous reste un élément indispensable à mettre en œuvre. Jusqu'à présent, nous avons présenté deux outils, mais vous pouvez toujours ne pas les lancer sur vos modifications. Comment s'assurer alors que nous n'avons pas fait ça pour rien ? Comment s'assurer que ces outils maintiennent notre projet en bonne santé ? Il faut probablement automatiser, mais à quel moment ? Lors des tests sur la pull request fait par l'intégration continue ? Il est déjà trop tard !
+
+Et, si nous pouvions le faire localement à chaque commit ? C'est l'objet de la prochaine section.
+
+## pre-commit
+
+L'outil [pre-commit](https://pre-commit.com/) va nous permettre d'automatiser l'utilisation des deux outils présentés plus haut et à chaque commit. Il permet de créer des *hooks* git de manière très simple et il est facilement extensible. Vous pouvez aller voir la liste des [hooks](https://pre-commit.com/hooks.html) et trouver votre bonheur.
+
+:::{note} Remarque
+Nous nous intéressons ici à un projet écrit en C++ mais il vous est bien évidemment possible d'utiliser pre-commit pour d'autres langages
+:::
+
+Commençons par son installation. Nous allons rester dans l'univers de pixi et donc faire
+
+```shell
+pixi install pre-commit
+```
+
+Vous pouvez à présent initier pre-commit à l'aide de la ligne de commande suivante
+
+```bash
+pre-commit install
+```
+
+:::{attention}
+Si un contributeur ne fait pas le `pre-commit install` localement les hooks ne seront pas installés et donc, aucun test ne sera effectué. Il est important de bien documenter cette étape pour qu'elle rentre dans les habitudes et intervienne juste après le clonage du dépôt.
+:::
+
+Il nous faut à présent définir ce que nous voulons tester à chaque commit en écrivant un fichier de configuration appelé `.pre-commit-config.yaml`. C'est bien évidemment à vous de mesurer l'impact de l'utilisation de cet outil. Si vous êtes trop contraignant et que le pre-commit prend une minute, vous n'aurez probablement pas l'adhésion des contributeurs. Il vous faudra donc trouver une solution acceptable qui profite à tous.
+
+Dans le cadre de cet atelier, nous souhaitons vérifier la liste suivante à chaque commit
+
+
+
+
+
