@@ -7,8 +7,8 @@ parts:
   # - caption: Présentation générale
   #   chapters:
   #     - file: talk
-  - caption: Session pratique
-    chapters:
+  - chapters:
       - file: practical_session/00-environment
-      - file: practical_session/01-depot
       - file: practical_session/communication
+      - file: practical_session/pre-commit
+      - file: practical_session/01-depot

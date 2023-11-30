@@ -37,6 +37,13 @@ Pour ajouter une licence à votre dépôt, il vous suffit d'ajouter un fichier `
 
 Vous pouvez le faire manuellement : c'est-à-dire créer le fichier localement, ouvrir une pull request et enfin insérer celle-ci dans la branche principale. Vous pouvez également le faire au travers de l'interface de github [Adding a license to a repository](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-license-to-a-repository).
 
+Il est recommandé de mettre en en-tête de fichier la licence ainsi que le copyright. Par exemple, dans un fichier C++
+
+```cpp
+// SPDX-License-Identifier: MIT
+// Copyright 2023 FOO TEAM. All rights reserved.
+```
+
 ## Que fait ce logiciel ?
 
 Lorsque vous avez besoin de savoir si un logiciel existe pour vos besoins, que faites-vous ? Probablement que vous allez faire une recherche sur votre moteur de recherche préféré, il se peut aussi que vous alliez directement sur github pour taper quelques mots clés et voir si vous trouvez votre bonheur. Quoi qu'il en soit, la première page que vous allez trouver sera certainement la page d'un dépôt github ou gitlab. Il est donc important que celle-ci donne assez de renseignements pour maintenir la lectrice ou le lecteur en haleine.
