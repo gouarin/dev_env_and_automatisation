@@ -16,7 +16,7 @@
    - utilisation de clang-format
    - vérification de l'indentation
 
-4. Présentation de github action
+4. Présentation de GitHub Actions
     - différence avec les autres outils de CI
     - format d'une action
     - présentation du market place
@@ -27,7 +27,7 @@
    - lancement des 1er tests
 
 6. Validation du titre de la PR au formalisme de conventional commit
-   
+
 7. Utilisation d'une matrice
     - compiler le projet sur plusieurs os
     - compiler le projet avec plusieurs compilo
@@ -41,9 +41,9 @@
    - mise en place de l'environnement de doc
    - construction de la doc via sphinx
    - sauvegarde du répertoire output sous forme d'artifact
-   - mise en place de github pages avec cet artifact
+   - mise en place de GitHub pages avec cet artifact
 
 11. Création d'une release
-   - github action avec workflow_dispatch
+   - GitHub Actions avec workflow_dispatch
    - fabrication de la release avec le change log
    - déclenchement de la construction du paquet conda et déploiement sur une channel conda

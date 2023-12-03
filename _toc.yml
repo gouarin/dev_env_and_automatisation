@@ -7,8 +7,15 @@ parts:
   # - caption: Présentation générale
   #   chapters:
   #     - file: talk
-  - chapters:
-      - file: practical_session/00-environment
-      - file: practical_session/communication
-      - file: practical_session/pre-commit
-      - file: practical_session/01-depot
+  - caption: Tour d'horizon
+    chapters:
+      - file: overview/environment
+      - file: overview/communication
+      - file: overview/pre-commit
+      - file: overview/depot
+      - file: overview/intro-github-actions
+
+  - caption: Mise en pratique
+    chapters:
+      - file: practical_session/initialisation
+      - file: practical_session/first-action

@@ -9,5 +9,5 @@ title: Cadre de développement et automatisation pour l'open source
 
 - Améliorer et sécuriser son processus de développement
 - Diffuser son travail de manière semi automatique et l’ouvrir au plus grand nombre
-- Comprendre le fonctionnement de github actions
+- Comprendre le fonctionnement de GitHub Actions
 - Acquérir une autonomie pour mettre en place ses propres workflows

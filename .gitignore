@@ -1,1 +1,4 @@
 _build
+# pixi environments
+.pixi
+.DS_Store
