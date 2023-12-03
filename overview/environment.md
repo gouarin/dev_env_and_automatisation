@@ -39,7 +39,7 @@ Pour installer pixi, il suffit de taper cette ligne de commande dans un terminal
 
 ::::{tab-set}
 :::{tab-item}Linux & macOS
-```shell
+```bash
 curl -fsSL https://pixi.sh/install.sh | bash
 ```
 :::
@@ -53,7 +53,7 @@ powershell iwr -useb https://pixi.sh/install.ps1 | iex
 :::{note}
 Pour vérifier que tout s'est bien passé, vous pouvez essayer d'afficher l'aide
 
-```shell
+```bash
 pixi --help
 ```
 
@@ -65,14 +65,14 @@ Nous allons voir à présent comment a été créé l'environnement afin de bien
 
 Nous allons donc initialiser un nouveau projet en faisant dans un terminal
 
-```shell
+```bash
 pixi init test-pixi
 cd test-pixi
 ```
 
 Notre projet a plusieurs dépendances et nous allons les installer au fur et à mesure. L'application est écrite en C++ et nous choisirons [CMake](https://cmake.org/) pour compiler et installer celle-ci. Pour installer ces dépendances, il suffit d'utiliser la commande `add` de pxi.
 
-```shell
+```bash
 pixi add cxx-compiler cmake
 ```
 
@@ -104,13 +104,13 @@ Pour utiliser cet environnement, vous avez deux possibilités: la commande `run`
 
 La commande `run` est suivie de la commande que vous voulez exécuter dans l'environnement. Par exemple
 
-```shell
+```bash
 pixi run cmake --version
 ```
 
 alors que la commande `shell` vous place directement dans un shell lié à l'environnement dans lequel vous pouvez exécuter un ensemble de commandes. Par exemple
 
-```shell
+```bash
 pixi shell
 cmake --version
 exit
@@ -142,7 +142,7 @@ Il ne faut pas oublier d'installer `ninja` pour que cette tâche fonctionne.`
 
 Pour exécuter cette tâche, il suffit de taper la ligne de commande suivante dans un terminal
 
-```shell
+```bash
 pixi run configure
 ```
 

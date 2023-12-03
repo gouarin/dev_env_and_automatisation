@@ -69,7 +69,7 @@ En plus du formatage, vous avez des outils qui vont regarder la syntaxe de votre
 
 Si nous utilisons clang-tidy sur notre exemple précédent voici ce que nous obtenons
 
-```shell
+```bash
 clang-tidy -checks='-*,bugprone-infinite-loop,readability-identifier-naming' \
            -config="{CheckOptions: [ {key: readability-identifier-naming.FunctionCase, value: lower_case} ]}" \
            tests/try-format.cpp
@@ -112,7 +112,7 @@ Nous nous intéressons ici à un projet écrit en C++ mais il vous est bien évi
 
 Commençons par son installation. Nous allons rester dans l'univers de pixi et donc faire
 
-```shell
+```bash
 pixi install pre-commit
 ```
 
@@ -141,6 +141,7 @@ Dans le cadre de cet atelier, nous souhaitons vérifier la liste suivante à cha
 - remplacer les tabulations par des espaces (https://GitHub.com/Lucas-C/pre-commit-hooks)
 - vérifier que les changements sont bien compatibles avec le formatage souhaité décrit dans le fichier `.clang-format` (https://GitHub.com/pre-commit/mirrors-clang-format)
 
+(pre-commit-target)=
 Voici à quoi ressemble le fichier `.pre-commit-config.yaml`
 
 ```yaml
@@ -173,10 +174,10 @@ repos:
         files: .*\.[hc]pp$
 ```
 
-:::{exercise}
-Ajoutez ce fichier dans votre dépôt et appliquez-le sur l'ensemble des fichiers à l'aide de la commande
+:::{note}
+Par défaut, pre-commit ne s'exécute que sur les fichiers qui concernent le commit en cours. Si vous voulez exécuter la vérification sur l'ensemble des fichiers, vous pouvez le faire à l'aide de la commande
 
-```shell
+```bash
 pre-commit run --all-files
 ```
 :::

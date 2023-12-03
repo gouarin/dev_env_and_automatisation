@@ -45,13 +45,13 @@ Nous allons commencer par mettre l'ensemble des fichiers se trouvant dans le ré
 
 Vous pouvez à présent créer l'environnement de développement sous pixi dans le répertoire que vous venez de créer à l'aide de la ligne de commande
 
-```shell
+```bash
 pixi install
 ```
 
 Enfin, pour vérifier que tout fonctionne correctement, il vous suffit de faire
 
-```shell
+```bash
 pixi run start
 ```
 
@@ -59,7 +59,7 @@ Vous devriez voir apparaître un cercle comme présenté ci-dessus.
 
 Vous pouvez maintenant initialiser le système de gestion de version pour ce répertoire en faisant
 
-```shell
+```bash
 git init
 ```
 

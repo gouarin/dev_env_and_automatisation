@@ -19,3 +19,5 @@ parts:
     chapters:
       - file: practical_session/initialisation
       - file: practical_session/first-action
+      - file: practical_session/pre-commit
+      - file: practical_session/documentation
