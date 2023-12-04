@@ -1,6 +1,6 @@
 # Documentation
 
-Nous allons à présent générer la documentation de notre logiciel et la rendre disponible via [GitHub Pages](https://pages.github.com/). Nous utiliserons [Sphinx](https://www.sphinx-doc.org), [breathe](https://breathe.readthedocs.io) et [doxygen](https://www.doxygen.nl/) pour générer la documentation en html. La configuration comporte un certain nombre d'étapes et nous ne souhaitons pas perdre de temps sur ce point. Nous avons néanmoins mis une partie à la fin de ce chapitre qui décrit les étapes si vous voulez le refaire plus tard.
+Nous allons à présent générer la documentation de notre logiciel et la rendre disponible via [GitHub Pages](https://pages.github.com/). Nous utiliserons [Sphinx](https://www.sphinx-doc.org), [breathe](https://breathe.readthedocs.io) et [doxygen](https://www.doxygen.nl/) pour générer la documentation en html. La configuration comporte un certain nombre d'étapes et nous ne souhaitons pas perdre de temps sur ce point. Nous avons néanmoins mis une partie [Mise en place de la documentation](#config-sphinx) à la fin de ce chapitre qui décrit les étapes si vous voulez le refaire plus tard.
 
 :::{note}
 N'oubliez pas de retourner dans la branche `main` et de faire
@@ -59,6 +59,35 @@ Ceci afin d'éviter que plusieurs actions essaient de générer le site en même
 [Using concurrency](https://docs.github.com/en/actions/using-jobs/using-concurrency)
 :::
 
+Vous pouvez à présent utiliser l'artifact créé précédemment pour GitHub Pages en ajoutant le travail suivant
+
+```yaml
+    deploy:
+      runs-on: ubuntu-latest
+      needs: build
+      permissions:
+        contents: read
+        pages: write
+        id-token: write
+      steps:
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v2
+```
+
+Plusieurs remarques sur cette étape
+
+- Il n'est pas nécessaire de la faire si la construction de la documentation échoue : `needs: build`. Il faut le modifier en fonction du nom que vous avez mis pour le travail précédent.
+- Pour déployer le site sur GitHub Pages, il faut des permissions et notamment le droit d'écriture :
+    ```yaml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    ```
+
+
+(config-sphinx)=
 ## Mise en place de la documentation
 
 Nous expliquons ici comment initialiser le répertoire documentation en utilisant les outils cités au début de ce chapitre : Sphinx, Breathe et Doxygen. Les deux derniers sont utilisés pour pouvoir mettre la documentation C++ des fonctions, classes... dans Sphinx.
