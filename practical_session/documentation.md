@@ -30,7 +30,7 @@ Vous devriez avoir un dossier `html` qui s'est créé. Il vous suffit d'ouvrir d
 
 ## Mise en place de l'action
 
-Nous allons ajouter une action pour la documentation dans le dossier `.github/workflows` que nous appelons `doc.yml`.
+Nous allons ajouter une action pour la documentation dans le dossier `.github/workflows` que nous appelons `doc.yml` qui se déclenchera au moment d'une pull request.
 
 Écrivez l'action en vous appuyant sur ce que vous avez fait précédemment. Pour le moment, nous souhaitons juste faire ce que nous avons fait en local et mettre le répertoire `html` dans une archive : voir l'action [upload-pages-artifact](https://github.com/actions/upload-pages-artifact).
 
@@ -75,7 +75,7 @@ Vous pouvez à présent utiliser l'artifact créé précédemment pour GitHub Pa
           uses: actions/deploy-pages@v2
 ```
 
-Plusieurs remarques sur cette étape
+:::{note}Plusieurs remarques sur cette étape
 
 - Il n'est pas nécessaire de la faire si la construction de la documentation échoue : `needs: build`. Il faut le modifier en fonction du nom que vous avez mis pour le travail précédent.
 - Pour déployer le site sur GitHub Pages, il faut des permissions et notamment le droit d'écriture :
@@ -85,6 +85,98 @@ Plusieurs remarques sur cette étape
       pages: write
       id-token: write
     ```
+:::
+
+À la fin du processus, vous devriez être en mesure de voir la documentation à l'adresse suivante `https://votre_login.github.io/nom_projet` ou `https://votre_organisation.github.io/nom_projet`.
+
+:::{attention}
+Il y a plusieurs choses qui ne vont pas dans ce que nous venons de faire.
+1. Est-ce que nous souhaitons que ce processus se déclenche uniquement au moment de la pull request ?
+2. Est-ce que nous voulons que cette action soit réalisée également sur les fork ?
+3. Est-ce que nous voulons que le GitHub Pages soit sur l'ensemble des branches ou seulement sur la branche principale ?
+4. Est-ce que le processus `ci.yml` doit se déclencher à chaque fois que nous modifions la documentation ?
+:::
+
+Nous allons détailler chacun de ces points et voir comment faire avec GitHub Actions pour avoir un meilleur contrôle.
+
+## Définir quand déclencher le workfow
+
+Nous allons répondre ici aux points 1 et 4 où nous souhaitons avoir un déclenchement un peu plus fin. En effet, nous souhaitons que le workflow soit déclenché que si la pull request porte sur la branche principale. Nous aimerions par ailleurs que le workflow se déclenche au moment d'un `push` dans cette même branche principal. Enfin, nous aimerions pouvoir déclencher manuellement.
+
+Tout se passe dans la partie qui se trouve au début du fichier `yaml` dans la section `on`. Jusqu'à présent, nous avons fait quelque chose de très simple en ne choisissant que `pull_request`. Mais, nous pouvons déclencher le workflow pour plein de types d'événements GitHub: [Events that trigger workflows](https://docs.github.com/actions/using-workflows/events-that-trigger-workflows).
+
+Nous pouvons spécifier, lorsque nous sommes dans le cas d'une pull request, la branche cible sur laquelle porte la pull request pour déclencher le workflow. Voici un exemple
+
+```yaml
+on:
+  pull_request:
+    branches:
+      main
+```
+
+Ainsi, si vous faites une pull request sur une branche `dev`, ce workflow ne sera jamais exécuté.
+
+Vous avez également l'événement `push` qui vous permet de déclencher le workflow si vous poussez les modifications dans une branche (comme par exemple lors d'une fusion d'une pull request dans une branche). Si vous ne spécifiez pas le nom de la ou les branches, le workflow sera exécuté à chaque fois. Mais comme pour le mot clé `pull_request`, vous pouvez spécifier la ou les branches. Voici un exemple
+
+```yaml
+on:
+  puush:
+    branches:
+      main
+```
+
+Enfin, nous voulons pouvoir déclencher manuellement : cela se fait via l'événement `workflow_dispatch`.
+
+Modifiez le workflow pour prendre en compte ce déclenchement plus fin pour la génération de la documentation.
+
+Concernant le point 4, si nous ne faisons qu'écrire de la documentation dans le répertoire `doc`, il n'est peut-être pas nécessaire d'exécuter le worflow défini dans `ci.yml` car le code n'aura pas changé. Toujours dans la partie gérant les événements, il est possible d'indiquer des chemins indiquant que le workflow ne se déclenchera que si les changements ont été effectués dans ceux-ci. Voici un exemple
+
+```yaml
+on:
+  pull_request:
+    paths:
+      - 'doc/**'
+      - '.github/workflows/doc.yml'
+```
+
+Ici, le worflow sera exécuté que si le répertoire `doc` ou le workflow sont modifiés.
+
+Nous pouvons également exclure des chemins comme dans l'exemple suivant
+
+```yaml
+on:
+  pull_request:
+    paths_ignore:
+      - 'doc/**'
+```
+
+Modifiez le workflow `ci.yml` pour qu'il ne se déclenche pas si le répertoire `doc` est modifié. Testez.
+
+## Définir quand déclencher les travaux
+
+Nous allons à présent répondre aux points 2 et 3. Si nous déclenchons la génération de la documentation sur les forks, nous allons avoir la mauvaise surprise d'avoir des documentations du projet éparpillées un peu partout. Rappelons qu'à la fin du processus, vous aurez une documentation à l'adresse `https://votre_login.github.io/nom_projet` ou `https://votre_organisation.github.io/nom_projet`. Quelle est la documentation de référence ? Impossible de le savoir pour une personne qui est en dehors du projet. Nous voudrions donc spécifier le nom du répertoire GitHub qui est autorisé à déclencher le travail pour la création de l'artifact et que cet artifact ne soit utilisé par GitHub Pages que si la branche est la branche principale.
+
+Nous allons utiliser une condition [if](https://docs.github.com/en/actions/using-jobs/using-conditions-to-control-job-execution) pour déclencher le travail sous certaines conditions.
+
+Voici un exemple qui déclenche le travail que si nous sommes dans un répertoire GitHub spécifique
+
+```yaml
+jobs:
+    my_job:
+      if: github.repository == 'gouarin/splinart-cpp'
+```
+
+Voici un exemple qui déclenche le travail que si nous sommes dans un répertoire GitHub spécifique et sur la branche principale
+
+```yaml
+jobs:
+    my_job:
+      if: github.repository == 'gouarin/splinart-cpp' && github.ref == 'refs/heads/main'
+```
+
+Modifiez le worklfow `doc.yml` pour que
+- la compilation de la documentation ne se fasse que si vous êtes dans votre dépôt et non dans un fork,
+- la mise en place de GitHub Pages à partir de l'artifact ne se fasse que si vous êtes dans votre dépôt et non dans un fork et que vous êtes sur la branche principale.
 
 
 (config-sphinx)=
