@@ -21,3 +21,4 @@ parts:
       - file: practical_session/first-action
       - file: practical_session/pre-commit
       - file: practical_session/documentation
+      - file: practical_session/long-work

@@ -178,6 +178,7 @@ Modifiez le worklfow `doc.yml` pour que
 - la compilation de la documentation ne se fasse que si vous êtes dans votre dépôt et non dans un fork,
 - la mise en place de GitHub Pages à partir de l'artifact ne se fasse que si vous êtes dans votre dépôt et non dans un fork et que vous êtes sur la branche principale.
 
+Vérifiez que tout fonctionne bien, puis faites un `Squash and merge`.
 
 (config-sphinx)=
 ## Mise en place de la documentation

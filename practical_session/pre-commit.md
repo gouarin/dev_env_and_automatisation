@@ -120,4 +120,4 @@ Vérifiez que tout fonctionne bien en ayant à présent le schéma suivant
 
 ![](./figures/ci-yml-3.png)
 
-Faire un `Squash and merge`.
+Faites un `Squash and merge`.
