@@ -29,6 +29,7 @@ Si ces systèmes sont intéressants pour un usage en calcul scientifique et nota
 
 Nous pouvons par ailleurs citer l'univers [conda](https://docs.conda.io) et notamment [conda-forge](https://conda-forge.org/) qui rassemble un ensemble de paquets créés et diffusés par la communauté. Ces paquets n'ont pas de langages de programmation particuliers. Nous retrouvons des paquets écrits en C++, Python, R, ... En revanche, comme dit plus haut pour le langage Python, la mise en place d'un environnement de développement passe par l'écriture d'un fichier `environment.yml` qui est source d'erreurs humaines. Pour palier à ce problème et avoir les mêmes avantages que yarn ou cargo, [pixi](https://pixi.sh/) a vu le jour cette année.
 
+(pixi)=
 ## pixi
 
 pixi va être utilisé dans la suite pour mettre en place l'environnement de développement qui va nous servir tout au long de cet atelier. C'est pourquoi, nous allons détailler ici son utilisation.

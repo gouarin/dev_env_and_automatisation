@@ -58,7 +58,7 @@ Pour cela, nous allons utiliser la notion de matrice dans GitHub Actions qui per
 
 Prenons l'exemple suivant
 
-```
+```yaml
 jobs:
   python_tests:
     runs-on: ${{ matrix.os }}

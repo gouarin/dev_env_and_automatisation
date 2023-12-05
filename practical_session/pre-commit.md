@@ -34,13 +34,13 @@ Il vous faut également ajouter le fichier `.clang-format` qui définit les règ
 
 Exécutez l'initialisation des **hooks** à l'aide de la ligne de commande
 
-```
+```bash
 pre-commit install
 ```
 
 Exécutez maintenant les vérifications sur l'ensemble des répertoires et regardez les résultats
 
-```
+```bash
 pre-commit run --all-files
 ```
 

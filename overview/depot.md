@@ -77,7 +77,7 @@ Le message du commit doit être structuré comme suit
 
 Le type définit la catégorie du changement. Il peut prendre les valeurs
 
-```
+```text
 'build',
 'chore',
 'ci',
@@ -109,7 +109,7 @@ L'étendue qui est optionnelle permet de donner un peu plus de détail sur la pa
 
 - Message du commit avec étendue
 
-    ```
+    ```text
     feat(lang): add polish language
     ```
 Nous verrons lors de l'utilisation de GitHub Actions comment vérifier que le message de la pull request suit bien cette convention et comment générer automatiquement le changelog et le numéro de montée en version lors de la création d'une nouvelle version.

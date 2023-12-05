@@ -58,6 +58,7 @@ Vous pouvez aller plus loin et définir les règles de nommage pour vos classes,
 
 Mais, il y a pire dans cet exemple : le code est complètement bugué et, s'il n'y a pas de tests, vous pourriez passer à côté même si nous avons ici grossi le trait. Nous allons voir dans la prochaine partie comment limiter la casse.
 
+(l-analyse-statique)=
 ## L'analyse statique
 
 En plus du formatage, vous avez des outils qui vont regarder la syntaxe de votre code sans rien compiler ou exécuter. Là encore, vous en trouverez au moins un pour votre langage préféré

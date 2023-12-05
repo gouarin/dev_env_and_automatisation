@@ -22,3 +22,4 @@ parts:
       - file: practical_session/pre-commit
       - file: practical_session/documentation
       - file: practical_session/long-work
+      - file: practical_session/packaging
