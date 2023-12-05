@@ -49,6 +49,7 @@ Nous en profiterons pour effacer automatiquement la branche qui a servi à la pu
 Vous pouvez choisir quel message vous souhaitez pour le commit du *squash*. Nous avons choisi ici de prendre le titre de la pull request ainsi que sa description. Nous utiliserons ce message pour la construction du *changelog* en utilisant.
 :::
 
+(conventional-commits)=
 ## Utilisation de commits conventionnels
 
 Lorsque nous faisons une nouvelle version d'un projet, il est bien de l'accompagner d'un journal des modifications également appelé **changelog**. Celui-ci permet en un coup d'œil de voir ce qui a évolué depuis la dernière version et ce aussi bien pour les développeurs que pour les utilisateurs. Ce journal peut contenir les informations suivantes : la correction des bugs, l'ajout de nouvelles fonctionnalités, l'ajout de documentation, l'ajout de nouveaux tests, ...

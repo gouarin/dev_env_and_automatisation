@@ -1,4 +1,4 @@
-find_package(gtest)
+find_package(GTest)
 
 set(COMMON_BASE
     main.cpp
