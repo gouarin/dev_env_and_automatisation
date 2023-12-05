@@ -11,23 +11,18 @@
 
 La mise en place d'un cadre de développement passe par la définition des outils et des dépendances nécessaires pour développer et tester son application ou sa librairie. Le but est que toute personne désireuse de s'investir dans le projet puisse le faire rapidement et simplement. De plus, si un problème se présente lors de l'installation ou de la phase de test, les itérations pour résoudre le problème seront réduites, car l'environnement de développement est figé. Il y a donc de forte chance que le problème vienne de notre application et non de la mise à jour d'une dépendance.
 
-Nous retrouvons dans de nombreux langages des outils de gestion de paquets plus ou moins aboutis. La spécification de l'environnement peut se faire via un fichier écrit entièrement par une personne. C'est le cas par exemple du fichier `requirements.txt` que nous retrouvons dans le langage Python permettant de décrire un ensemble de paquets. Le problème avec cette démarche est qu'il est facile d'oublier une dépendance et qu'il est difficile de définir clairement les versions souhaitées.
+Nous retrouvons dans de nombreux langages des outils de gestion de paquets plus ou moins aboutis. La spécification de l'environnement peut se faire via un fichier écrit entièrement par une personne. C'est le cas par exemple du fichier `requirements.txt` utilisé par [pip](https://pypi.org/project/pip/) que nous retrouvons dans le langage Python permettant de décrire un ensemble de paquets. Le problème avec cette démarche est qu'il est facile d'oublier une dépendance et qu'il est difficile de définir clairement les versions souhaitées. Le même type de difficultés est rencontré dans l'univers [conda](https://docs.conda.io) et notamment [conda-forge](https://conda-forge.org/) qui rassemble un ensemble de paquets créés et diffusés par la communauté. Ces paquets n'ont pas de langages de programmation particuliers. Nous retrouvons des paquets écrits en C++, Python, R, ... La mise en place d'un environnement de développement `conda` passe par l'écriture d'un fichier `environment.yml` qui est source d'erreurs humaines. [Spack](https://GitHub.com/spack/spack), quant à lui, permet de décrire les recettes de compilation de notre logiciel ainsi que celles de ses dépendances.
 
-D'autres systèmes de gestion de paquets ont fait un réel effort pour construire des environnements qui se veulent reproductibles. Nous pouvons par exemple citer [yarn](https://yarnpkg.com) pour les projets JavaScript ou encore [cargo](https://doc.rust-lang.org/cargo/) pour les projets Rust. Pour chacun d'entre eux, un fichier local au projet indique les paquets installés. Lorsqu'une nouvelle dépendance est installée, celle-ci est directement ajoutée à ce fichier en spécifiant une version. Il existe également un autre fichier (généralement avec l'extension `.lock`) permettant de réinstaller à l'identique pour l'OS et l'architecture concernés.
+Les systèmes de gestion de paquets [yarn](https://yarnpkg.com) pour les projets JavaScript, [cargo](https://doc.rust-lang.org/cargo/) pour les projets Rust ou [poetry](https://python-poetry.org/) pour le langage Python mettent mettent à jour cette liste de paquets. Pour chacun d'entre eux, un fichier local au projet indique les paquets installés. Lorsqu'une nouvelle dépendance est installée, celle-ci est directement ajoutée à ce fichier en spécifiant une version. Il existe également un autre fichier (généralement avec l'extension `.lock`) permettant de réinstaller à l'identique pour l'OS et l'architecture concernés.
 
-:::{note}
-[poetry](https://python-poetry.org/) permet d'avoir le même cas d'usage que yarn et cargo pour le langage Python.
-:::
 
 :::{attention}
-La reproductibilité n'est pas facile à obtenir et selon la version et le moment où vous utilisez le logiciel qui fait la gestion de packages, rien ne vous dit que votre environnement de développement sera réellement reproductible dans un avenir plus ou moins proche.
+Toutes les solutions décrites jusqu'ici s'appuient à un moment donné sur la pile logicielle du système d'exploitation mais surtout reposent sur la disponibilité de binaires mis à disposition dont on ne connait pas les recettes de compilation ni combien de temps ces binaires seront disponibles. Ces outils permettent donc de décrire la pile logicielle nécessaire la plus récente mais sans être en capacité de la reproduire une fois que les binaires auront disparu.
 :::
 
-Il existe aussi des systèmes de gestions de paquets qui ne sont pas spécifiques à un langage. Nous pouvons citer [Nix](https://nixos.org/), [Guix](https://guix.gnu.org/) ou encore [Spack](https://GitHub.com/spack/spack). La particularité de Nix et de Guix est d'imposer la reproductibilité par design. Vous êtes assurés d'avoir le même environnement de développement au bit près. Chacune de ces méthodes recompile l'intégralité de l'arbre des dépendances sur votre machine. Vous pouvez de plus avoir un dépôt distant où les binaires sont disponibles.
+Les outils [Nix](https://nixos.org/) et [Guix](https://guix.gnu.org/) vont un cran plus loin. La reproductibilité fait partie intégrante de leur conception. Les deux outils s'appuient uniquement sur le noyau du système d'exploitation linux et fournissent donc l'intégralité de la pile logicielle. Ils stockent l'historique de toutes les recettes de compilation de tous les paquets qu'ils proposent et vous êtes donc assurés d'avoir le même environnement de développement au bit près demain et dans cinq ans. Si les versions binaires des paquets ne sont plus disponibles, il est toujours possible de tout recompiler. Ces systèmes sont intéressants pour un usage en calcul scientifique et notamment dans la mise en place d'environnements de développement et de production sur des machines HPC, ils sont assez simple d'utilisation mais ils ne fonctionnent que sous linux et leur courbe d'apprentissage peut être assez raide lorsqu'il s'agit de d'écrire des paquets.
 
-Si ces systèmes sont intéressants pour un usage en calcul scientifique et notamment dans la mise en place d'environnements de développement et de production sur des machines HPC, leur courbe d'apprentissage peut être assez raide.
-
-Nous pouvons par ailleurs citer l'univers [conda](https://docs.conda.io) et notamment [conda-forge](https://conda-forge.org/) qui rassemble un ensemble de paquets créés et diffusés par la communauté. Ces paquets n'ont pas de langages de programmation particuliers. Nous retrouvons des paquets écrits en C++, Python, R, ... En revanche, comme dit plus haut pour le langage Python, la mise en place d'un environnement de développement passe par l'écriture d'un fichier `environment.yml` qui est source d'erreurs humaines. Pour palier à ce problème et avoir les mêmes avantages que yarn ou cargo, [pixi](https://pixi.sh/) a vu le jour cette année.
+Dans le cadre de cet atelier, nous allons utiliser [pixi](https://pixi.sh/) qui a vu le jour cette année. Il s'appuie sur conda mais gère la liste des dépendances à la manière de yarn ou cargo. 
 
 (pixi)=
 ## pixi
@@ -138,7 +133,7 @@ configure = { cmd = [
 ```
 
 :::{attention}
-Il ne faut pas oublier d'installer `ninja` pour que cette tâche fonctionne.`
+Il ne faut pas oublier d'installer `ninja` pour que cette tâche fonctionne.
 :::
 
 Pour exécuter cette tâche, il suffit de taper la ligne de commande suivante dans un terminal
