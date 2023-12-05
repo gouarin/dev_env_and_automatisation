@@ -112,7 +112,7 @@ Si cette commande écrit dans le fichier `cppcheck_err.txt` alors il y a une err
 if [[ -s cppcheck_err.txt ]];
 then
     cat cppcheck_err.txt
-    exit -1
+    exit 1
 fi
 ```
 

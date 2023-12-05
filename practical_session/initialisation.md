@@ -43,20 +43,6 @@ Nous avons également ajouté un certain nombre de tâches pour pouvoir construi
 
 Nous allons commencer par mettre l'ensemble des fichiers se trouvant dans le répertoire `material/1.initialization` dans un répertoire que vous aurez crée et qui se trouve en dehors du répertoire git que vous venez de cloner.
 
-Vous pouvez à présent créer l'environnement de développement sous pixi dans le répertoire que vous venez de créer à l'aide de la ligne de commande
-
-```bash
-pixi install
-```
-
-Enfin, pour vérifier que tout fonctionne correctement, il vous suffit de faire
-
-```bash
-pixi run start
-```
-
-Vous devriez voir apparaître un cercle comme présenté ci-dessus.
-
 Vous pouvez maintenant initialiser le système de gestion de version pour ce répertoire en faisant
 
 ```bash
@@ -74,6 +60,23 @@ Si vous ne savez pas comment faire : [création d'un dépôt](https://docs.githu
 :::
 
 Vous devrez ensuite configurer votre dépôt GitHub comme indiquer dans [Configurer son dépôt GitHub](depot).
+
+## Première exécution
+
+Vous pouvez à présent créer l'environnement de développement sous pixi dans le répertoire que vous venez de créer à l'aide de la ligne de commande
+
+```bash
+pixi install
+```
+
+Enfin, pour vérifier que tout fonctionne correctement, il vous suffit de faire
+
+```bash
+pixi run start
+```
+
+Vous devriez voir apparaître un cercle comme présenté ci-dessus.
+
 
 
 Vous êtes prêt pour la suite !

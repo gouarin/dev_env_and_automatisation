@@ -2,7 +2,7 @@
 
 :::{hint}Objectifs de cette partie
 - Imposer des contraintes sur son dépôt GitHub pour le bien de tous
-- Donner envie d'essayer son application ou sa librairie
+- Donner envie d'essayer son application ou sa bibliothèque
 - Faciliter les échanges avec les utilisateurs
 :::
 
@@ -23,7 +23,7 @@ Pour ce faire, il suffit d'aller dans les `Settings` du dépôt puis dans `Branc
 
 Dans la section précédente , nous avons fait en sorte de ne travailler que par pull requests pour mettre à jour la branche principale. Nous pouvons aller un peu plus loin en essayant de conserver un historique des modifications le plus propre possible. Le choix fait ici est peut-être discutable pour certain mais il aura le mérite d'y réfléchir.
 
-Lorsque l'on travaille par pull request, il n'est pas rare que l'on fasse plein de petits commits afin de résoudre la CI, revoir son implémentation ou tout simplement corriger des erreurs de typographie. On se retrouve alors avec un historique comportent une part non négligeable de commits qui n'ont pas grand rapport avec la correction d'un bug ou l'ajout d'une nouvelle fonctionnalité.
+Lorsque l'on travaille par pull request, il n'est pas rare que l'on fasse plein de petits commits afin de résoudre la CI, revoir son implémentation ou tout simplement corriger des erreurs de typographie. On se retrouve alors avec un historique comportant une part non négligeable de commits qui n'ont pas grand rapport avec la correction d'un bug ou l'ajout d'une nouvelle fonctionnalité.
 
 GitHub offre différentes manières de remettre le travail fait dans une pull request dans la branche principale :
 
@@ -64,7 +64,7 @@ Les commits sont rangés selon des catégories. Nous retrouvons le titre de la p
 
 Là encore, nous pouvons mettre un cadre qui fait que la génération du changelog est automatique et s'appuie sur les titres des pull requests qui auront été injectées dans la branche principale.
 
-Ce cadre est mis en place à partir de la règle des [commit conventionnels](https://www.conventionalcommits.org). L'idée est d'apporter de l'information dans le titre d'un commit ou de la pull request pour catégoriser les changements qui sont faits. Cette convention suit également [SemVer](https://semver.org/lang/) que nous verrons un peu plus tard dans l'atelier et qui nous permettra d'incrémenter la version de notre application ou de notre librairie en fonction de la nature des changements effectués.
+Ce cadre est mis en place à partir de la règle des [commit conventionnels](https://www.conventionalcommits.org). L'idée est d'apporter de l'information dans le titre d'un commit ou de la pull request pour catégoriser les changements qui sont faits. Cette convention suit également [SemVer](https://semver.org/lang/) que nous verrons un peu plus tard dans l'atelier et qui nous permettra d'incrémenter la version de notre application ou de notre bibliothèque en fonction de la nature des changements effectués.
 
 Le message du commit doit être structuré comme suit
 
