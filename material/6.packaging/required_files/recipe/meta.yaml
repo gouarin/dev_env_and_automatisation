@@ -1,0 +1,39 @@
+{% set version = '0.2.0' %}
+
+package:
+  name: splinart-cpp
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/gouarin/splinart-cpp.git
+  git_rev: v{{ version }}
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+    - ninja
+  host:
+    - xtensor
+    - opencv
+    - cli11
+  run:
+    - libopencv
+
+test:
+  commands:
+    - test -f ${PREFIX}/bin/splinart-cpp  # [unix]
+    - if not exist %LIBRARY_PREFIX%\bin\splinart-cpp.exe (exit 1)  # [win]
+
+about:
+  home: http://github.com/gouarin/splinart-cpp
+  license: BSD
+  license_family: BSD
+  summary: 'spline art generator'
+  description: 'spline art generator'
+
+extra:
+  recipe-maintainers: 'loic.gouarin@gmail.com'

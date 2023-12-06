@@ -106,7 +106,7 @@ Cette action se joue en deux temps.
 ::::{important}
 Il n'est pas nécessaire de mettre un `token`.
 
-En revanche, la création de la pull request nécessite que GitHub Actions ait des droits sur votre dépôt. Il faut aller dans `Settings->Actions->General` et cocher la case tout en bas
+En revanche, la création de la pull request nécessite que GitHub Actions a des droits sur votre dépôt. Il faut aller dans `Settings->Actions->General` et cocher la case tout en bas
 
 :::{figure} ./figures/action-perm.png
 :::
@@ -136,13 +136,28 @@ La construction d'un package conda se fait en créant une recette. Celle-ci est 
 
 Nous allons dans un premier temps tester localement la construction de notre package. Pour cela, il vous faut installer `conda-build` dans `pixi`. Une fois que c'est fait, éditez le fichier `meta.yaml` et changez la version en fonction de ce que vous avez sur votre dépôt et le champ `git_url` afin de mettre votre adresse de dépôt.
 
-Il faut suffit ensuite de faire
+Il vous suffit ensuite de faire
 
 ```bash
 conda build recipe
 ```
 
-Si tout s'est bien passé, vous devriez voir où est stocké le package.
+Si tout s'est bien passé, vous devriez voir où est stocké le package : probablement dans un répertoire appelé `conda-build` dans votre répertoire `$HOME`. Nous allons essayer de l'installer localement avec `pixi`. Pour cela, vous allez devoir modifier temporairement le fichier `pixi.toml` à deux endroits
+
+- la partie `channels` doit contenir au début de la liste votre répertoire `conda-build`
+  ```toml
+  channels = ["file:///path/to/your/conda-bld/", "conda-forge"]
+  ```
+
+- la partie `platforms` ne doit contenir que votre plateforme, car `pixi` va interroger vos différentes channels pour l'ensemble des plateformes concernées.
+
+Il ne reste plus qu'à faire
+
+```bash
+pixi add splinart-cpp
+```
+
+et vérifiez que vous avez bien l'exécutable.
 
 ### Anaconda
 
@@ -156,3 +171,115 @@ anaconda upload /path_to/splinart-*.tar.bz2
 
 Si tout s'est bien passé, vous devriez voir votre paquet sur votre compte anaconda. Si vous voulez tester l'installation, éditez votre fichier `pixi.toml` et ajoutez dans les channels à côté de `conda-forge` le nom de votre `channel`.
 
+:::{important}
+Retirez le chemin local ajouté à la section précédente pour ne pas avoir d'effet de bord.
+:::
+
+Pour pouvoir déposer un paquet sur anaconda depuis une action, nous devons nous authentifier. Nous allons utiliser un token pour cela.
+
+Retournez sur votre compte anaconda puis allez sur votre avatar et choisissez `Settings`. Allez ensuite dans `Access` et créez un token qui a les droits suivants
+
+:::{figure} ./figures/anaconda.png
+:::
+
+:::{note}
+Le nom que vous donnez au token n'a pas de réelle importance.
+:::
+
+### Construction et déploiement du paquet conda
+
+Maintenant que nous avons pu vérifier que tout se passait bien localement, nous allons maintenant ajouter une action qui se déclenche lorsqu'une nouvelle version est disponible, qui construit le paquet conda via `conda-build` et qui met le paquet sur votre compte anaconda via `anaconda-client` et le token créé précédemment.
+
+Il y a ici deux ingrédients
+
+- Encore une fois, nous allons jouer avec la section `on` pour déclencher l'événement et plus précisément avec [`release`](https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#release).
+
+  ```yaml
+  on:
+    release:
+      types:
+        - published
+  ```
+
+- Il nous faut également renseigner le token pour l'action en ajoutant un `secrets` dans le dépôt GitHub.
+
+  :::{attention}
+  Il ne faut jamais mettre de mots de passe ou de tokens en clair dans vos fichiers !
+  :::
+
+
+    Pour ajouter le token conda dans les `secrets` de GitHub, il faut aller dans les `Settings` votre dépôt puis dans `Secrets and variables -> Actions`. Cliquez ensuite dans `New repository secret`. Donnez un nom et copiez-collez le token que vous pouvez retrouver sur votre compte anaconda.
+
+    :::{attention}
+    Le nom du `secret` sera celui utiliser dans l'action.
+    :::
+
+
+  Voici à quoi ressemble l'action
+
+```yaml
+name: Publish on conda
+
+on:
+  workflow_dispatch:
+  pull_request:
+  release:
+    types: published
+
+jobs:
+    upload_on_conda:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: false
+            matrix:
+                os:
+                    - ubuntu-latest
+                    - macos-latest
+        steps:
+            - uses: actions/checkout@v1
+
+            - uses: prefix-dev/setup-pixi@v0.4.1
+              with:
+                pixi-version: v0.9.1
+                cache: true
+
+            - name: Install conda-build and anaconda-client
+              run: pixi add conda-build anaconda-client
+
+            - name: Set version
+              run: |
+                VER=$(cat version.txt)
+                echo "VERSION=$VER" >> $GITHUB_ENV
+
+            - name: Build the recipe
+              shell: pixi run bash {0}
+              run: conda build -c conda-forge conda/recipe
+
+            - name: upload on conda
+              if: github.event_name == 'release'
+              shell: pixi run bash {0}
+              run: anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force $HOME/conda-bld/*/splinart-*.tar.bz2
+
+```
+
+Plusieurs remarques :
+
+- Nous souhaitons pouvoir exécuter à chaque pull request pour être sûr de ne pas avoir cassé la construction du paquet.
+- Nous souhaitons pouvoir exécuter la construction manuellement (`workflow_dispatch`).
+- Nous ne mettons le paquet sur le compte conda que si nous sommes dans un événement `release`
+  ```yaml
+  - name: upload on conda
+              if: github.event_name == 'release'
+  ```
+- Nous nous servons du `secret` mis précédemment pour mettre le paquet sur le compte conda
+  ```yaml
+  run: anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force $HOME/conda-bld/*/splinart-*.tar.bz2
+  ```
+
+  :::{note}
+  Nous avons choisi ici `ANACONDA_TOKEN` comme nom de `secret`. Pensez à le remplacer par le nom que vous aurez choisi.
+  :::
+
+Si la pull request arrive à construire le paquet conda, vous pouvez fusionner cette branche dans la branche principale.
+
+Testez cette action en créant au préalable une nouvelle version: c'est-à-dire en exécutant deux fois l'action `please-release` (une fois pour créer une pull request avec le changelog et la montée de version et une deuxième fois pour créer le tag et l'archive).
