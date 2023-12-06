@@ -1,6 +1,6 @@
 # Conclusion
 
-Lors de cet atelier, vous avez vu l'utilisation de différents outils en développement logiciel qui permettent d'améliorer grandement la qualité d'un logiciel open source : formatage de code, linter, documentation, tests... Les outils présentés étaient utilisés dans un cadre de développement d'un logiciel écrit en C++, mais il est important de comprendre que l'ensemble du processus peut se faire dans n'importe quel langage. Il suffit juste de trouver la correspondance de ces outils dans le langage cible.
+Lors de cet atelier, vous avez vu l'utilisation de différents outils en développement logiciel qui permettent d'améliorer grandement la qualité d'un logiciel open source : formatage de code, linter, documentation, tests... Les outils présentés étaient utilisés dans un cadre de développement d'un logiciel écrit en C++. Cependant, il est important de comprendre que l'ensemble du processus peut se faire dans n'importe quel langage. Il suffit juste de trouver la correspondance de ces outils dans le langage cible.
 
 Enfin, nous avons pu montrer comment mettre un cadre de développement en imposant quelques contraintes pour le bien de tous, tout en laissant quelques latitudes. Nous avons aussi construit un espace d'échange entre les différents acteurs du développement logiciel. Tout ceci en utilisant les outils proposés par GitHub.
 
@@ -10,10 +10,12 @@ Si vous voyez des fautes de frappes, si vous trouvez que certaines parties ne so
 
 https://github.com/gouarin/dev_env_and_automatisation/issues
 
+Si vous avez apprécié le contenu de ce document, n'hésitez pas à mettre une petite étoile !!
+
 Nous n'avons pas passé du temps sur l'écriture du `readme` ainsi que les fichiers comme `CONTRIBUTING.md` ou `CODE_OF_CONDUCT.md`. Nous n'avons pas non plus mis une partie sur la création de templates pour les issues et les pull request. Si vous pensez que c'est utile, faites le savoir.
 
 Mais, sachez que tous ces éléments ainsi que ceux trouver dans l'atelier sont tous dans un répertoire qui montre le projet dans son état final
 
-:::{figure} ./figures/final.png
+:::{figure} ./practical_session/figures/final.png
 https://github.com/gouarin/splinart-cpp
 :::

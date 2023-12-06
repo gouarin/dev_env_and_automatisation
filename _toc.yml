@@ -23,4 +23,7 @@ parts:
       - file: practical_session/documentation
       - file: practical_session/long-work
       - file: practical_session/packaging
-      - file: practical_session/conclusion
+
+  - caption: Conclusion
+    chapters:
+      - file: conclusion
