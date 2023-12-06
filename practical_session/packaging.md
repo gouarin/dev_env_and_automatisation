@@ -116,5 +116,43 @@ Créez l'action associée et ajoutez les fichiers de configuration à votre dép
 
 D'ici, vous devriez avoir deux commits depuis la dernière version et ceux-ci devraient suivre la nomenclature des commits conventionnels. Vous pouvez donc tester la création d'une nouvelle version !
 
-Vous pouvez également tester en faisant des pull request qui mixent des `fix`et des `feat` et voir le comportement.
+Vous pouvez également tester en faisant des pull request qui mixent des `fix` et des `feat` et voir le comportement.
+
+## Packaging conda
+
+Nous allons montrer dans cette section comment déclencher la construction d'un package conda lorsqu'une nouvelle version est disponible et que ce package soit directement accessible sur votre `channel` conda.
+
+:::{attention}
+Nous faisons cela à titre d'exemple. Si vous voulez créer un package conda et le distribuer, il est préférable de le mettre sur [conda-forge](https://conda-forge.org/docs/maintainer/adding_pkgs.html) pour plus de visibilité.
+:::
+
+### Construction locale
+
+La construction d'un package conda se fait en créant une recette. Celle-ci est dans le répertoire `6.packaging/required_file/recipe`. Ce dossier est à mettre à la racine de votre dépôt. Il contient
+
+- Un fichier `meta.yaml` décrivant la version du paquet, où trouver le paquet, quelles sont les dépendances au moment du build et du runtime...
+- Un fichier `build.sh` qui décrit comment construire le paquet sous linux et macos.
+- Un fichier `bld.bat` qui décrit comment construire le paquet sous windows.
+
+Nous allons dans un premier temps tester localement la construction de notre package. Pour cela, il vous faut installer `conda-build` dans `pixi`. Une fois que c'est fait, éditez le fichier `meta.yaml` et changez la version en fonction de ce que vous avez sur votre dépôt et le champ `git_url` afin de mettre votre adresse de dépôt.
+
+Il faut suffit ensuite de faire
+
+```bash
+conda build recipe
+```
+
+Si tout s'est bien passé, vous devriez voir où est stocké le package.
+
+### Anaconda
+
+Nous allons maintenant essayer de mettre le package construit localement sur [anaconda](https://anaconda.org/) pour être sûr que tout le processus fonctionne avant de l'automatiser. Vous devez donc vous créer un compte pour créer votre propre `channel`.
+
+Une fois le compte créé, vous pouvez mettre votre paquet sur votre compte. Il vous faut installer `anaconda-client` via `pixi`, puis
+
+```bash
+anaconda upload /path_to/splinart-*.tar.bz2
+```
+
+Si tout s'est bien passé, vous devriez voir votre paquet sur votre compte anaconda. Si vous voulez tester l'installation, éditez votre fichier `pixi.toml` et ajoutez dans les channels à côté de `conda-forge` le nom de votre `channel`.
 

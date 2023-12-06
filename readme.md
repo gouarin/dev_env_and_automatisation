@@ -6,4 +6,4 @@ Lors du processus de développement, de nombreuses tâches sont répétitives et
 
 Ce répertoire est le contenu d'un atelier proposant de réfléchir à l'ensemble des actions pouvant rendre la vie des différents acteurs (mainteneurs, développeurs, utilisateurs, ...) plus agréable. Nous utiliserons GitHub Actions pour l’automatisation de certaines de ces tâches répétitives.
 
-https://gouarin.GitHub.io/dev_env_and_automatisation/
+https://gouarin.github.io/dev_env_and_automatisation/
