@@ -1,5 +1,18 @@
 # Création de version et packaging
 
+:::{hint}Objectifs de cette partie
+- Utiliser les commits conventionnels
+- Comprendre les montées de version avec semver
+- Construire un paquet conda
+:::
+
+:::{note}Notions GitHub Actions abordées
+- Vérifier le titre d'une pull request
+- Construire automatiquement une nouvelle version
+- Jouer avec les variables d'environnement
+- Utiliser des mots de passe ou token
+:::
+
 Nous voici dans la dernière partie de cet atelier. Nous souhaitons à présent pouvoir déclencher un événement à la main qui
 
 - crée un `CHANGELOG` à partir des commits réalisés depuis la dernière version,
@@ -269,7 +282,7 @@ Plusieurs remarques :
 - Nous ne mettons le paquet sur le compte conda que si nous sommes dans un événement `release`
   ```yaml
   - name: upload on conda
-              if: github.event_name == 'release'
+    if: github.event_name == 'release'
   ```
 - Nous nous servons du `secret` mis précédemment pour mettre le paquet sur le compte conda
   ```yaml
@@ -282,4 +295,4 @@ Plusieurs remarques :
 
 Si la pull request arrive à construire le paquet conda, vous pouvez fusionner cette branche dans la branche principale.
 
-Testez cette action en créant au préalable une nouvelle version: c'est-à-dire en exécutant deux fois l'action `please-release` (une fois pour créer une pull request avec le changelog et la montée de version et une deuxième fois pour créer le tag et l'archive).
+Testez cette action en créant au préalable une nouvelle version: c'est-à-dire en exécutant deux fois l'action `release-please` (une fois pour créer une pull request avec le changelog et la montée de version et une deuxième fois pour créer le tag et l'archive).

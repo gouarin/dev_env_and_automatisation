@@ -1,5 +1,18 @@
 # Documentation
 
+:::{hint}Objectifs de cette partie
+- Mise en place de la documentation
+- Utilisation de Sphinx couplé à Doxygen et Breathe
+- Disponibilité de celle-ci sur GitHub Pages
+:::
+
+:::{note}Notions GitHub Actions abordées
+- Construction d'artifact
+- Connexion avec GitHub Pages
+- Jouer sur les événements de déclenchement
+- Condition sur l'exécution des travaux
+:::
+
 Nous allons à présent générer la documentation de notre logiciel et la rendre disponible via [GitHub Pages](https://pages.github.com/). Nous utiliserons [Sphinx](https://www.sphinx-doc.org), [breathe](https://breathe.readthedocs.io) et [doxygen](https://www.doxygen.nl/) pour générer la documentation en html. La configuration comporte un certain nombre d'étapes et nous ne souhaitons pas perdre de temps sur ce point. Nous avons néanmoins mis une partie [Mise en place de la documentation](#config-sphinx) à la fin de ce chapitre qui décrit les étapes si vous voulez le refaire plus tard.
 
 :::{note}
@@ -120,7 +133,7 @@ Vous avez également l'événement `push` qui vous permet de déclencher le work
 
 ```yaml
 on:
-  puush:
+  push:
     branches:
       main
 ```
@@ -146,7 +159,7 @@ Nous pouvons également exclure des chemins comme dans l'exemple suivant
 ```yaml
 on:
   pull_request:
-    paths_ignore:
+    paths-ignore:
       - 'doc/**'
 ```
 

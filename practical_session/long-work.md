@@ -1,5 +1,17 @@
 # Travaux longs
 
+:::{hint}Objectifs de cette partie
+- Mise en place de la documentation
+- Utilisation de Sphinx couplé à Doxygen et Breathe
+- Disponibilité de celle-ci sur GitHub Pages
+:::
+
+:::{note}Notions GitHub Actions abordées
+- Utiliser l'événement cron
+- Mettre des données dans la sortie d'un travail
+- Se servir des sorties d'un autre travail
+:::
+
 Lorsque nous mettons en place l'intégration continue, il n'est pas rare d'avoir un ensemble de tests qui prend du temps. Se pose alors la question de savoir si nous infligeons aux contributeurs d'attendre plus d'une heure pour savoir si leur pull request est conforme ou si nous limitons le temps de réponse. Attendre une heure n'est bien évidemment pas raisonnable.
 
 Il nous faut donc faire un choix sur les tests qui ne prennent pas trop de temps, mais qui nous permettent de nous assurer de la consistance du projet. Nous ne souhaitons pas pour autant oublier les autres tests. Mais, nous pourrions les faire à un autre moment.
@@ -103,7 +115,7 @@ Nous avons fait le plus difficile. Il nous reste à présent à créer le travai
           run-clang-tidy
 ```
 
-La partie `Configure` est propre au projet. Il nous faut un certain nombre d'informations que nous pouvons retrouver via CMake et l'option `CMAKE_EXPORT_COMPILE_COMMANDS` pour pouvoir analyser le code source. Malheureusement, cette commande de donne que les commande de compilation pour les librairies et les exécutables. Imaginez que vous avez un projet [header only](https://en.wikipedia.org/wiki/Header-only) et le fichier `compile_commands.json` généré par la commande CMake sera vide. C'est pour cette raison que nous utilisons un autre outil ([compdb](https://github.com/Sarcasm/compdb)) qui nous permet d'ajouter les fichiers `hpp`.
+La partie `Configure` est propre au projet. Il nous faut un certain nombre d'informations que nous pouvons retrouver via CMake et l'option `CMAKE_EXPORT_COMPILE_COMMANDS` pour pouvoir analyser le code source. Malheureusement, cette commande de donne que les commande de compilation pour les bibliothèques et les exécutables. Imaginez que vous avez un projet [header only](https://en.wikipedia.org/wiki/Header-only) et le fichier `compile_commands.json` généré par la commande CMake sera vide. C'est pour cette raison que nous utilisons un autre outil ([compdb](https://github.com/Sarcasm/compdb)) qui nous permet d'ajouter les fichiers `hpp`.
 
 :::{note}Remarques
 - Nous n'avons pas installé `clang-tidy` car il est déjà installé par `pixi` via le paquet `clang-tools`.

@@ -1,5 +1,15 @@
 # pre-commit, formatage et linter
 
+:::{hint}Objectifs de cette partie
+- Utilisation de pre-commit
+- Mise en place d'analyse statique et formatage
+:::
+
+:::{note}Notions GitHub Actions abordées
+- Définir plusieurs travaux
+- Mettre des dépendances entre ces travaux
+:::
+
 Vous avez réussi à faire tourner les tests de votre application sur linux et macos en vous appuyant sur pixi. C'est chouette !! Il est temps de passer au packaging.
 
 Mais, avez-vous eu la curiosité de regarder le code ? C'est une catastrophe : rien est indenté pareil, les noms des fonctions ne suivent aucune nomenclature. Si nous laissons les choses en l'état, tout le monde va y aller de sa petite touche et vous n'aurez plus jamais envie d'aller y jeter un œil. Heureusement, il y a quelques commentaires.

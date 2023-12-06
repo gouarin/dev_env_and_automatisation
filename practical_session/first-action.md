@@ -7,8 +7,8 @@
 
 :::{note}Notions GitHub Actions abordées
 - Où mettre les actions ?
-- Écrire son premier workflow
-- Exécuter sur différents OS
+- Fonctionnement d'un workflow
+- Mise en place d'une matrice
 :::
 
 Nous allons ici mettre en place la première action à exécuter par GitHub Actions. Nous allons voir si ce que nous avons réussi à faire fonctionner localement avec pixi fonctionne également dans l'intégration continue.
