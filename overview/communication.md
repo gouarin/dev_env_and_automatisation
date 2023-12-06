@@ -1,5 +1,11 @@
 # La communication
 
+:::{hint}Objectifs de cette partie
+- Identifier les acteurs
+- Mieux cerner les différentes formes de communications
+- Comprendre leurs impacts sur un projet open source
+:::
+
 La communication est un élément essentiel pour que le projet prenne de l'ampleur et qu'une communauté se crée. Elle doit tenir compte de chacune des personnes susceptibles d'apporter sa contribution. Celle-ci peut-être de différentes natures : indiquer un bug, demander une nouvelle fonctionnalité, poser une question, corriger un bug, faire de la documentation, ajouter une nouvelle fonctionnalité, relire les pull requests et les valider, ...
 
 Comment faire en sorte que l'ensemble de ces étapes qui sont inhérentes à chaque développement open source se passent au mieux ? Comment faire pour donner une certaine autonomie aux acteurs pour qu'ils se sentent investis et créatifs dans un cadre contraint ?

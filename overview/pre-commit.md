@@ -1,8 +1,14 @@
 # Faciliter l'ajout de code
 
-Dans le processus de développement, l'ajout de code au dépôt principal via des pull request a une place importante. Nous ne souhaitons pas que chacun des contributeurs mettent leur style d'écriture dans les fichiers. Nous appelons ici **style d'écriture** tout ce qui se rapporte au formatage d'un fichier : les espaces, les indentations, les règles de nommage, ... Même si nous voulons un cadre le moins contraint possible pour laisser une grande part à la créativité, il est néanmoins nécessaire de mettre quelques règles pour que ce ne soit pas le bazar.
+:::{hint}Objectifs de cette partie
+- Mettre un cadre sur le formatage du code source
+- Mettre un cadre sur le processus de développement
+- Commencer à contrôler la qualité du projet
+:::
 
-Un autre point important est de pouvoir se focaliser sur l'essentiel. Lors de la relecture d'une pull request, vous n'allez certainement pas être capable de traiter les problèmes de formatage, les problèmes d'algorithmie, les bugs cachés, ... Il est donc important d'automatiser tout ce qui peu l'être en amont.
+Dans le processus de développement, l'ajout de code au dépôt principal via des pull request a une place importante. Nous ne souhaitons pas que chacun des contributeurs mettent leur style d'écriture dans les fichiers. Nous appelons ici **style d'écriture** tout ce qui se rapporte au formatage d'un fichier : les espaces, les indentations, les règles de nommage... Même si nous voulons un cadre le moins contraint possible pour laisser une grande part à la créativité, il est néanmoins nécessaire de mettre quelques règles pour que ce ne soit pas le bazar.
+
+Un autre point important est de pouvoir se focaliser sur l'essentiel. Lors de la relecture d'une pull request, vous n'allez certainement pas être capable de traiter les problèmes de formatage, les problèmes d'algorithmie, les bugs cachés... Il est donc important d'automatiser tout ce qui peu l'être en amont.
 
 ## Le formatage du code
 

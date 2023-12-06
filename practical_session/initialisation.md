@@ -1,5 +1,10 @@
 # Mise en place de la session pratique
 
+:::{hint}Objectifs de cette partie
+- Présenter le projet
+- Initialiser l'environnement de développement
+:::
+
 Dans le premier chapitre, nous avons fait le tour des outils à mettre en place pour définir le cadre de développement, favoriser et faciliter les interactions entre les différents acteurs gravitant autour d'un projet open source. Nous en avons présenté certain plus en détail.
 
 Pour la suite, nous supposerons que

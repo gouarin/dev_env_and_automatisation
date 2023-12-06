@@ -1,5 +1,16 @@
 # Première action GitHub
 
+:::{hint}Objectifs de cette partie
+- Mettre en place l'intégration continue
+- Réaliser des tests unitaires du projet sur différents OS
+:::
+
+:::{note}Notions GitHub Actions abordées
+- Où mettre les actions ?
+- Écrire son premier workflow
+- Exécuter sur différents OS
+:::
+
 Nous allons ici mettre en place la première action à exécuter par GitHub Actions. Nous allons voir si ce que nous avons réussi à faire fonctionner localement avec pixi fonctionne également dans l'intégration continue.
 
 Vous allez commencer par créer une branche, car, rappelez-vous il est interdit de mettre des choses directement dans la branche principale. Nous voulons nous assurer que les changements soient le plus sain possible par rapport à notre cadre de développement.

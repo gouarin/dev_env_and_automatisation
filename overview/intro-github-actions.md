@@ -1,4 +1,9 @@
-# Présentation de GitHub Actions
+# GitHub Actions
+
+:::{hint}Objectifs de cette partie
+- Tour d'horizon des outils d'intégration continue
+- Présentation de GitHub Actions
+:::
 
 Afin d'automatiser les tâches qui peuvent l'être dans le cadre du développement de logiciel open source, nous allons nous servir de l'intégration continue que nous trouvons sur GitHub. L'intérêt étant de fixer le cadre, de le rendre lisible et de vérifier que personne ne sort de celui-ci. Ce n'est donc plus à vous de tout vérifier, mais aux contributeurs de faire en sorte que l'ensemble du processus soit correct.
 
