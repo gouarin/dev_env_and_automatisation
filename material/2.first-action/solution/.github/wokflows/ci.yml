@@ -1,0 +1,22 @@
+name: "Run CI"
+
+on: pull_request
+
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: prefix-dev/setup-pixi@v0.4.1
+        with:
+          pixi-version: v0.9.1
+          cache: true
+
+      - run: pixi run test

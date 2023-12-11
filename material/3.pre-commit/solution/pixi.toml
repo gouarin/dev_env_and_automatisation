@@ -1,0 +1,35 @@
+[project]
+name = "splinart"
+version = "0.1.0"
+description = "Add a short description here"
+authors = ["Loic Gouarin <loic.gouarin@gmail.com>"]
+channels = ["conda-forge"]
+platforms = ["linux-64", "win-64", "osx-64", "osx-arm64"]
+
+[tasks]
+clean = { cmd = "ninja -C .build -t clean" }
+configure = { cmd = "cmake -G Ninja -S . -B .build -DCMAKE_BUILD_TYPE=Release" }
+configure_test = { cmd = "cmake -G Ninja -S . -B .build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo" }
+build_ninja = { cmd = "ninja -C .build" }
+build = { depends_on = ["configure", "build_ninja"] }
+build_test = { depends_on = ["configure_test", "build_ninja"] }
+start = { cmd = ".build/splinart-cpp", depends_on = ["build"] }
+test = { cmd = ".build/tests/test_splinart", depends_on = ["build_test"] }
+doc = { cmd = "cd doc; make html" }
+
+[dependencies]
+cxx-compiler = "1.6.0.*"
+cmake = "3.27.9.*"
+opencv = "4.8.1.*"
+cli11 = "2.3.2.*"
+xtensor = "0.24.7.*"
+ninja = "1.11.1.*"
+clang-tools = "15.0.7.*"
+clang-format = "15.0.7.*"
+pre-commit = "3.5.0.*"
+gtest = "1.14.0.*"
+sphinx = "6.2.1.*"
+pydata-sphinx-theme = "0.14.4.*"
+doxygen = "1.9.8.*"
+breathe = "4.35.0.*"
+myst-parser = "2.0.0.*"

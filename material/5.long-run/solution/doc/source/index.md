@@ -11,5 +11,3 @@ spline
 ```{toctree}
 api/index.md
 ```
-
-test

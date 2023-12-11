@@ -148,7 +148,7 @@ Dans le cadre de cet atelier, nous souhaitons vérifier la liste suivante à cha
 - remplacer les tabulations par des espaces (https://GitHub.com/Lucas-C/pre-commit-hooks)
 - vérifier que les changements sont bien compatibles avec le formatage souhaité décrit dans le fichier `.clang-format` (https://GitHub.com/pre-commit/mirrors-clang-format)
 
-(pre-commit-target)=
+(pre_commit_target)=
 Voici à quoi ressemble le fichier `.pre-commit-config.yaml`
 
 ```yaml

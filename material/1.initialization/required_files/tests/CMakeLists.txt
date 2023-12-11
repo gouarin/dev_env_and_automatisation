@@ -12,8 +12,8 @@ set(SPLINART_TESTS
 foreach(filename IN LISTS SPLINART_TESTS)
     string(REPLACE ".cpp" "" targetname ${filename})
     add_executable(${targetname} ${COMMON_BASE} ${filename})
-    target_link_libraries(${targetname} PRIVATE splinart gtest_main gtest)
+    target_link_libraries(${targetname} PRIVATE splinart GTest::gtest_main GTest::gtest)
 endforeach()
 
 add_executable(test_splinart ${COMMON_BASE} ${SPLINART_TESTS})
-target_link_libraries(test_splinart PRIVATE splinart gtest_main gtest)
+target_link_libraries(test_splinart PRIVATE splinart GTest::gtest_main GTest::gtest)

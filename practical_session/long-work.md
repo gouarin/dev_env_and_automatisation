@@ -115,6 +115,10 @@ Nous avons fait le plus difficile. Il nous reste à présent à créer le travai
           run-clang-tidy
 ```
 
+:::{attention}
+Vous aurez également besoin de mettre à la racine du projet le fichier `.clang-tidy` qui définit la configuration souhaitée. Ce fichier se trouve dans le répertoire `material/5.long-run/required_files/`.
+:::
+
 La partie `Configure` est propre au projet. Il nous faut un certain nombre d'informations que nous pouvons retrouver via CMake et l'option `CMAKE_EXPORT_COMPILE_COMMANDS` pour pouvoir analyser le code source. Malheureusement, cette commande de donne que les commande de compilation pour les bibliothèques et les exécutables. Imaginez que vous avez un projet [header only](https://en.wikipedia.org/wiki/Header-only) et le fichier `compile_commands.json` généré par la commande CMake sera vide. C'est pour cette raison que nous utilisons un autre outil ([compdb](https://github.com/Sarcasm/compdb)) qui nous permet d'ajouter les fichiers `hpp`.
 
 :::{note}Remarques

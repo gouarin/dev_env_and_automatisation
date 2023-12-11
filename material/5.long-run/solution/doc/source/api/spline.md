@@ -6,6 +6,6 @@
 ```
 
 ```{eval-rst}
-.. doxygenfunction:: splinart::SplinT
+.. doxygenfunction:: splinart::splint
    :project: splinart
 ```

@@ -1,0 +1,46 @@
+[
+{
+  "directory": "/Users/loic/Formations/tmp/1.initialization/build",
+  "command": "/Users/loic/Formations/tmp/1.initialization/.pixi/env/bin/arm64-apple-darwin20.0.0-clang++ -I/Users/loic/Formations/tmp/1.initialization/include -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include/opencv4 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O2 -pipe -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -o CMakeFiles/splinart.dir/src/shapes.cpp.o -c /Users/loic/Formations/tmp/1.initialization/src/shapes.cpp",
+  "file": "/Users/loic/Formations/tmp/1.initialization/src/shapes.cpp",
+  "output": "CMakeFiles/splinart.dir/src/shapes.cpp.o"
+},
+
+{
+  "directory": "/Users/loic/Formations/tmp/1.initialization/build",
+  "command": "/Users/loic/Formations/tmp/1.initialization/.pixi/env/bin/arm64-apple-darwin20.0.0-clang++ -I/Users/loic/Formations/tmp/1.initialization/include -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include/opencv4 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O2 -pipe -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -o CMakeFiles/splinart-cpp.dir/src/command_line.cpp.o -c /Users/loic/Formations/tmp/1.initialization/src/command_line.cpp",
+  "file": "/Users/loic/Formations/tmp/1.initialization/src/command_line.cpp",
+  "output": "CMakeFiles/splinart-cpp.dir/src/command_line.cpp.o"
+},
+
+{
+  "directory": "/Users/loic/Formations/tmp/1.initialization/build/examples",
+  "command": "/Users/loic/Formations/tmp/1.initialization/.pixi/env/bin/arm64-apple-darwin20.0.0-clang++ -I/Users/loic/Formations/tmp/1.initialization/include -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include/opencv4 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O2 -pipe -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -o CMakeFiles/circle.dir/circle.cpp.o -c /Users/loic/Formations/tmp/1.initialization/examples/circle.cpp",
+  "file": "/Users/loic/Formations/tmp/1.initialization/examples/circle.cpp",
+  "output": "examples/CMakeFiles/circle.dir/circle.cpp.o"
+},
+
+{
+  "directory": "/Users/loic/Formations/tmp/1.initialization/build",
+  "command": "/Users/loic/Formations/tmp/1.initialization/.pixi/env/bin/arm64-apple-darwin20.0.0-clang++ -I/Users/loic/Formations/tmp/1.initialization/include -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include/opencv4 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O2 -pipe -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -c /Users/loic/Formations/tmp/1.initialization/include/splinart/shapes.hpp",
+  "file": "/Users/loic/Formations/tmp/1.initialization/include/splinart/shapes.hpp"
+},
+
+{
+  "directory": "/Users/loic/Formations/tmp/1.initialization/build",
+  "command": "/Users/loic/Formations/tmp/1.initialization/.pixi/env/bin/arm64-apple-darwin20.0.0-clang++ -I/Users/loic/Formations/tmp/1.initialization/include -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include/opencv4 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O2 -pipe -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -c /Users/loic/Formations/tmp/1.initialization/include/splinart/build_img.hpp",
+  "file": "/Users/loic/Formations/tmp/1.initialization/include/splinart/build_img.hpp"
+},
+
+{
+  "directory": "/Users/loic/Formations/tmp/1.initialization/build",
+  "command": "/Users/loic/Formations/tmp/1.initialization/.pixi/env/bin/arm64-apple-darwin20.0.0-clang++ -I/Users/loic/Formations/tmp/1.initialization/include -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include/opencv4 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O2 -pipe -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -c /Users/loic/Formations/tmp/1.initialization/include/splinart/spline.hpp",
+  "file": "/Users/loic/Formations/tmp/1.initialization/include/splinart/spline.hpp"
+},
+
+{
+  "directory": "/Users/loic/Formations/tmp/1.initialization/build",
+  "command": "/Users/loic/Formations/tmp/1.initialization/.pixi/env/bin/arm64-apple-darwin20.0.0-clang++ -I/Users/loic/Formations/tmp/1.initialization/include -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include/opencv4 -ftree-vectorize -fPIC -fPIE -fstack-protector-strong -O2 -pipe -stdlib=libc++ -fvisibility-inlines-hidden -fmessage-length=0 -isystem /Users/loic/Formations/tmp/1.initialization/.pixi/env/include -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -c /Users/loic/Formations/tmp/1.initialization/include/splinart/imshow.hpp",
+  "file": "/Users/loic/Formations/tmp/1.initialization/include/splinart/imshow.hpp"
+}
+]

@@ -38,7 +38,7 @@ git pull
 pour récupérer les derniers changements.
 :::
 
-Nous allons créer à présent une nouvelle branche `add-pre-commit` dans laquelle nous allons ajouter le fichier `.pre-commit-config.yaml` comme indiqué [ici](#pre-commit-target).
+Nous allons créer à présent une nouvelle branche `add-pre-commit` dans laquelle nous allons ajouter le fichier `.pre-commit-config.yaml` comme indiqué [ici](#pre_commit_target).
 
 Il vous faut également ajouter le fichier `.clang-format` qui définit les règles de formatage qui se trouve dans le répertoire `material/3.pre-commit/required_files`.
 
@@ -106,6 +106,10 @@ cppcheck --enable=all -q --project=.build/compile_commands.json --suppressions-l
 
 :::{note}
 Le fichier `.cppcheck` est dans le répertoire `material/3.pre-commit/required_files`.
+:::
+
+:::{important}
+Si jamais, par inadvertance, une dépendance venait à manquer, n'hésitez pas à la rajouter en utilisant la commande `pixi add`.
 :::
 
 Écrivez une étape qui exécute ces deux commandes en même temps. Nous lui donnerons le nom de `Configure`.
