@@ -1,8 +1,9 @@
 # Travaux longs
 
 :::{hint}Objectifs de cette partie
-- Automatiser l'exécution d'un test long
-- Implémenter les conditions de déclenchement de la tâche
+- Savoir comment gérer les tests longs
+- Déclencher des tests à intervalles réguliers
+- Mise en place de l'analyse statique via `clang-tidy`
 :::
 
 :::{note}Notions GitHub Actions abordées
