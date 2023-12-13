@@ -1,9 +1,8 @@
 # Travaux longs
 
 :::{hint}Objectifs de cette partie
-- Mise en place de la documentation
-- Utilisation de Sphinx couplé à Doxygen et Breathe
-- Disponibilité de celle-ci sur GitHub Pages
+- Automatiser l'exécution d'un test long
+- Implémenter les conditions de déclenchement de la tâche
 :::
 
 :::{note}Notions GitHub Actions abordées
