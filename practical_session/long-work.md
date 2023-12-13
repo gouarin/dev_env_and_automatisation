@@ -1,9 +1,9 @@
 # Travaux longs
 
 :::{hint}Objectifs de cette partie
-- Mise en place de la documentation
-- Utilisation de Sphinx couplé à Doxygen et Breathe
-- Disponibilité de celle-ci sur GitHub Pages
+- Savoir comment gérer les tests longs
+- Déclencher des tests à intervalles réguliers
+- Mise en place de l'analyse statique via `clang-tidy`
 :::
 
 :::{note}Notions GitHub Actions abordées
