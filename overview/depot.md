@@ -64,7 +64,7 @@ Les commits sont rangés selon des catégories. Nous retrouvons le titre de la p
 
 Là encore, nous pouvons mettre un cadre qui fait que la génération du changelog est automatique et s'appuie sur les titres des pull requests qui auront été injectées dans la branche principale.
 
-Ce cadre est mis en place à partir de la règle des [commit conventionnels](https://www.conventionalcommits.org). L'idée est d'apporter de l'information dans le titre d'un commit ou de la pull request pour catégoriser les changements qui sont faits. Cette convention suit également [SemVer](https://semver.org/lang/) que nous verrons un peu plus tard dans l'atelier et qui nous permettra d'incrémenter la version de notre application ou de notre bibliothèque en fonction de la nature des changements effectués.
+Ce cadre est mis en place à partir de la règle des [commit conventionnels](https://www.conventionalcommits.org). L'idée est d'apporter de l'information dans le titre d'un commit ou de la pull request pour catégoriser les changements qui sont faits. Cette convention suit également [SemVer](https://semver.org/) que nous verrons un peu plus tard dans l'atelier et qui nous permettra d'incrémenter la version de notre application ou de notre bibliothèque en fonction de la nature des changements effectués.
 
 Le message du commit doit être structuré comme suit
 
