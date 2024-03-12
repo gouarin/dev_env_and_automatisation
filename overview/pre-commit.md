@@ -120,7 +120,7 @@ Nous nous intéressons ici à un projet écrit en C++ mais il vous est bien évi
 Commençons par son installation. Nous allons rester dans l'univers de pixi et donc faire
 
 ```bash
-pixi install pre-commit
+pixi add pre-commit
 ```
 
 Vous pouvez à présent initier pre-commit à l'aide de la ligne de commande suivante
