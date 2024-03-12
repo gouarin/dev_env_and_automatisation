@@ -46,7 +46,7 @@ Nous avons également ajouté un certain nombre de tâches pour pouvoir construi
 
 ## Initialisation du projet
 
-Nous allons commencer par mettre l'ensemble des fichiers se trouvant dans le répertoire `material/1.initialization` dans un répertoire que vous aurez crée et qui se trouve en dehors du répertoire git que vous venez de cloner.
+Nous allons commencer par mettre l'ensemble des fichiers se trouvant dans le répertoire `material/1.initialization/required_files` dans un répertoire que vous aurez crée et qui se trouve en dehors du répertoire git que vous venez de cloner.
 
 Vous pouvez maintenant initialiser le système de gestion de version pour ce répertoire en faisant
 
