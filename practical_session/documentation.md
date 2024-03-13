@@ -218,7 +218,18 @@ Il nous reste à modifier quelques entrées de ce fichier de la manière suivant
 PROJECT_NAME = "splinart"
 XML_OUTPUT = xml
 INPUT = ../include
+GENERATE_LATEX = NO
+GENERATE_MAN = NO
+GENERATE_RTF = NO
+CASE_SENSE_NAMES = NO
+GENERATE_HTML = NO
 GENERATE_XML = YES
+RECURSIVE = YES
+QUIET = YES
+JAVADOC_AUTOBRIEF = YES
+WARN_IF_UNDOCUMENTED = NO
+MACRO_EXPANSION = YES
+PREDEFINED = IN_DOXYGEN
 ```
 
 À partir de cette étape, si vous exécutez la ligne de commande
