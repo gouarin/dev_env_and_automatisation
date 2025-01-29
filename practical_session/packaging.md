@@ -101,10 +101,13 @@ Nous allons utiliser cette action : [release-please-action](https://github.com/m
     ```
 
 :::{tip} `release-please-config.json`
+
 Si vous voulez comprendre ce que fait ce fichier de configuration, il vous suffit de vous rendre à [Manifest Driven release-please](https://github.com/googleapis/release-please/blob/main/docs/manifest-releaser.md).
+
 :::
 
 :::{tip} Type de déclenchement
+
 Nous déclencherons l'action à la main. Par conséquent
 
 ```yaml
@@ -116,10 +119,20 @@ Cette action se joue en deux temps.
 - La première fois que vous la déclenchez, elle ouvre une pull request avec la version qui sera créée et le `CHANGELOG.md`.
 - La deuxième fois que vous la déclenchez, elle crée la nouvelle version dans les `Release` de votre dépôt GitHub.
 
-::::{important}
-Il n'est pas nécessaire de mettre un `token`.
+::::{important}Utilisation d'un token
 
-En revanche, la création de la pull request nécessite que GitHub Actions a des droits sur votre dépôt. Il faut aller dans `Settings->Actions->General` et cocher la case tout en bas
+Il est nécessaire de mettre un `token` pour qu'à la fin de la deuxième étape, une action de type `release` soit déclenchée. GitHub fait cela pour éviter les déclenchements cycliques. Il vous faut pour cela utiliser un [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Il faut aller dans la configuration de votre compte `Settings->Developer settings->Personal access tokens->Tokens`. Vous devez ensuite générer un nouveau token en cochent les cases suivantes
+
+:::{figure} ./figures/personal-token.png
+:::
+
+Vous devez ajouter ce token dans les `secrets` du dépôt en allant dans `Settings->Secrets and variables->Actions`. Vous l'appellerez `RELEASE_PLEASE`.
+
+::::
+
+::::{important}Droits pour GitHub Actions
+
+La création de la pull request nécessite que GitHub Actions ait des droits sur votre dépôt. Il faut aller dans `Settings->Actions->General` et cocher la case tout en bas
 
 :::{figure} ./figures/action-perm.png
 :::
