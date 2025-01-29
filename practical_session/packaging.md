@@ -251,9 +251,9 @@ jobs:
         steps:
             - uses: actions/checkout@v1
 
-            - uses: prefix-dev/setup-pixi@v0.4.1
+            - uses: prefix-dev/setup-pixi@v0.8.1
               with:
-                pixi-version: v0.9.1
+                pixi-version: v0.40.2
                 cache: true
 
             - name: Install conda-build and anaconda-client

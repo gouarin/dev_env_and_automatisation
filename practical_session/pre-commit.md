@@ -101,7 +101,7 @@ cmake -S . -B .build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug
 Cette commande va créer un fichier `.build/compile_command.json`. Il nous suffit à présent de lancer `cppcheck` via la commande
 
 ```bash
-cppcheck --enable=all -q --project=.build/compile_commands.json --suppressions-list=.cppcheck 2> cppcheck_err.txt
+cppcheck --enable=missingInclude,unusedFunction,warning,style,portability,performance -q --project=.build/compile_commands.json --suppressions-list=.cppcheck 2> cppcheck_err.txt
 ```
 
 :::{note}

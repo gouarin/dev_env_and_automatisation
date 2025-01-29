@@ -5,20 +5,16 @@
 #include <splinart/shapes.hpp>
 #include <xtensor/xio.hpp>
 
-class CircleTest : public testing::TestWithParam<xt::xtensor<double, 2>>
-{
-};
+class CircleTest : public testing::TestWithParam<xt::xtensor<double, 2>> {};
 
-TEST_P(CircleTest, circle)
-{
-    xt::xtensor<double, 2> expected_path = GetParam();
+TEST_P(CircleTest, circle) {
+  xt::xtensor<double, 2> expected_path = GetParam();
 
-    auto c = splinart::Circle({0, 0}, 1., expected_path.shape(0));
+  auto c = splinart::Circle({0, 0}, 1., expected_path.shape(0));
 
-    for (std::size_t i = 0; i < expected_path.size(); ++i)
-    {
-        EXPECT_NEAR(c.path[i], expected_path[i], 1e-15);
-    }
+  for (std::size_t i = 0; i < expected_path.size(); ++i) {
+    EXPECT_NEAR(c.path[i], expected_path[i], 1e-15);
+  }
 }
 
 // clang-format off

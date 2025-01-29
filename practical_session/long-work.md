@@ -97,9 +97,9 @@ Nous avons fait le plus difficile. Il nous reste à présent à créer le travai
     steps:
       - uses: actions/checkout@v3
 
-      - uses: prefix-dev/setup-pixi@v0.4.1
+      - uses: prefix-dev/setup-pixi@v0.8.1
         with:
-          pixi-version: v0.9.1
+          pixi-version: v0.40.2
           cache: true
 
       - name: Configure

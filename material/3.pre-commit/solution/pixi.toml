@@ -11,10 +11,10 @@ clean = { cmd = "ninja -C .build -t clean" }
 configure = { cmd = "cmake -G Ninja -S . -B .build -DCMAKE_BUILD_TYPE=Release" }
 configure_test = { cmd = "cmake -G Ninja -S . -B .build -DBUILD_TESTS=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo" }
 build_ninja = { cmd = "ninja -C .build" }
-build = { depends_on = ["configure", "build_ninja"] }
-build_test = { depends_on = ["configure_test", "build_ninja"] }
-start = { cmd = ".build/splinart-cpp", depends_on = ["build"] }
-test = { cmd = ".build/tests/test_splinart", depends_on = ["build_test"] }
+build = { depends-on = ["configure", "build_ninja"] }
+build_test = { depends-on = ["configure_test", "build_ninja"] }
+start = { cmd = ".build/splinart-cpp", depends-on = ["build"] }
+test = { cmd = ".build/tests/test_splinart", depends-on = ["build_test"] }
 doc = { cmd = "cd doc; make html" }
 
 [dependencies]
@@ -33,3 +33,4 @@ pydata-sphinx-theme = "0.14.4.*"
 doxygen = "1.9.8.*"
 breathe = "4.35.0.*"
 myst-parser = "2.0.0.*"
+cppcheck = ">=2.6.2,<2.14"

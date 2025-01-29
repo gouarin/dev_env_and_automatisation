@@ -52,7 +52,7 @@ Il est recommandé de mettre en en-tête de fichier la licence ainsi que le copy
 
 ## Que fait ce logiciel ?
 
-Lorsque vous avez besoin de savoir si un logiciel existe pour vos besoins, que faites-vous ? Probablement que vous allez faire une recherche sur votre moteur de recherche préféré, il se peut aussi que vous alliez directement sur GitHub pour taper quelques mots clés et voir si vous trouvez votre bonheur. Quoi qu'il en soit, la première page que vous allez trouver sera certainement la page d'un dépôt GitHub ou gitlab. Il est donc important que celle-ci donne assez de renseignements pour maintenir la lectrice ou le lecteur en haleine.
+Lorsque vous avez besoin de savoir si un logiciel existe pour vos besoins, que faites-vous ? Probablement que vous allez faire une recherche sur votre moteur de recherche préféré, il se peut aussi que vous alliez directement sur GitHub pour taper quelques mots clés et voir si vous trouvez votre bonheur. Quoi qu'il en soit, la première page que vous allez trouver sera certainement la page d'un dépôt GitHub ou GitLab. Il est donc important que celle-ci donne assez de renseignements pour maintenir la lectrice ou le lecteur en haleine.
 
 Sur GitHub, les informations affichées sur un dépôt sont celles contenues dans le fichier `readme`.
 
@@ -88,7 +88,7 @@ Le `readme` n'est pas la documentation de votre logiciel. Il ne doit donc pas ê
 
 Il est plus facile d'essayer un logiciel lorsque nous n'avons rien à faire. S'il faut installer dix mille dépendances qui ne sont même pas documentées et que, même après cette étape, vous n'arrivez pas à installer le logiciel, car il y a un problème de version, vous allez aller voir ailleurs et c'est bien dommage pour celui qui a développé ce logiciel génial, mais qui n'a pas pris le temps de prendre soin du packaging.
 
-Si l'installation est bien documentée (même si c'est à partir des sources), que le processus n'a pas l'air trop contraignant, alors il y a de forte chance que la personne essaie. Bien évidemment, le logiciel évolue et les dépendances avec lui. Il serait bon que cette partie soit testée. C'est ce que nous ferons par la suite en utilisant GitHub-action.
+Si l'installation est bien documentée (même si c'est à partir des sources), que le processus n'a pas l'air trop contraignant, alors il y a de forte chance que la personne essaie. Bien évidemment, le logiciel évolue et les dépendances avec lui. Il serait bon que cette partie soit testée. C'est ce que nous ferons par la suite en utilisant GitHub Actions.
 
 Nous pouvons aller encore plus loin en ayant le logiciel sur un système de gestion de paquets (yarn, cargo, conda, ...). La personne n'a plus qu'à utiliser sa ligne de commande préférée pour installer le logiciel.
 
@@ -142,7 +142,7 @@ Souhaitez-vous que les questions en tout genre, la demande d'ajout de nouvelles 
 
 La question est donc : est-ce que l'on peut orienter les acteurs pour qu'ils prennent les bons chemins en cas de problème ?
 
-GitHub offre la possibilité de mettre en place des templates pour les issues et pour les pull requests. Nous verrons ici que la partie issue, car elle est plus flexible (pour le moment) que la partie pull request. En effet, vous pouvez créer des formulaires en utilisant des fichiers `yaml`. Vous pouvez trouver les informations sur [Configuring issue templates for your repository](https://docs.GitHub.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository).
+GitHub offre la possibilité de mettre en place des templates pour les issues et pour les pull requests. Nous ne verrons ici que la partie issue, car elle est plus flexible (pour le moment) que la partie pull request. En effet, vous pouvez créer des formulaires en utilisant des fichiers `yaml`. Vous pouvez trouver les informations sur [Configuring issue templates for your repository](https://docs.GitHub.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository).
 
 Voici un exemple de ce qui peut être mis en place lorsqu'une personne clique sur l'onglet `issue` de votre dépôt
 
