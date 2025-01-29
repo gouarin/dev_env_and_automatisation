@@ -1,0 +1,13 @@
+[project]
+authors = ["Loic Gouarin <loic.gouarin@gmail.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "github-actions"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+preview = "myst start"
+
+[dependencies]
+mystmd = ">=1.3.23,<2"
