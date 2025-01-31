@@ -247,10 +247,9 @@ Il y a ici deux ingrédients
 name: Publish on conda
 
 on:
-  workflow_dispatch:
-  pull_request:
-  release:
-    types: published
+    release:
+        types: [published]
+    workflow_dispatch:
 
 jobs:
     upload_on_conda:
@@ -258,34 +257,60 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                os:
-                    - ubuntu-latest
-                    - macos-latest
+                include:
+                    - os: windows-latest
+                      CONFIG: win_64_
+                    - os: ubuntu-24.04
+                      CONFIG: linux_64_.yaml
+                    - os: macos-13
+                      CONFIG: osx_64_.yaml
+                    - os: macos-latest
+                      CONFIG: osx_arm64_.yaml
         steps:
             - uses: actions/checkout@v1
 
             - uses: prefix-dev/setup-pixi@v0.8.1
               with:
-                pixi-version: v0.40.2
-                cache: true
+                  pixi-version: v0.40.2
+                  cache: true
 
             - name: Install conda-build and anaconda-client
               run: pixi add conda-build anaconda-client
 
-            - name: Set version
+            - name: Set version (Windows)
+              if: runner.os == 'Windows'
               run: |
-                VER=$(cat version.txt)
-                echo "VERSION=$VER" >> $GITHUB_ENV
+                  $VER = Get-Content version.txt
+                  echo "VERSION=$VER" >> $env:GITHUB_ENV
+
+            - name: Set version (Unix)
+              if: runner.os != 'Windows'
+              run: |
+                  VER=$(cat version.txt)
+                  echo "VERSION=$VER" >> $GITHUB_ENV
 
             - name: Build the recipe
+              if: runner.os == 'Windows'
               shell: pixi run bash {0}
-              run: conda build -c conda-forge conda/recipe
+              working-directory: conda
+              env:
+                  CONFIG: ${{ matrix.CONFIG }}
+              run: |
+                  conda config --add channels conda-forge
+                  ./.ci_support/run_win_build.bat
+
+            - name: Build the recipe
+              if: runner.os != 'Windows'
+              shell: pixi run bash {0}
+              working-directory: conda
+              run: |
+                  conda config --add channels conda-forge
+                  conda build recipe -m .ci_support/${{ matrix.CONFIG }} --suppress-variables --output-folder conda-bld
 
             - name: upload on conda
               if: github.event_name == 'release'
               shell: pixi run bash {0}
-              run: anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force $HOME/conda-bld/*/splinart-*.tar.bz2
-
+              run: anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force conda/conda-bld/*/splinart-*.conda
 ```
 
 Plusieurs remarques :

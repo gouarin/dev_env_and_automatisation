@@ -1,4 +1,4 @@
-{% set version = '0.2.0' %}
+{% set version = environ.get('VERSION', '') %}
 
 package:
   name: splinart-cpp
@@ -25,15 +25,15 @@ requirements:
 
 test:
   commands:
-    - test -f ${PREFIX}/bin/splinart-cpp  # [unix]
-    - if not exist %LIBRARY_PREFIX%\bin\splinart-cpp.exe (exit 1)  # [win]
+    - test -f ${PREFIX}/bin/splinart-cpp # [unix]
+    - if not exist %LIBRARY_PREFIX%\bin\splinart-cpp.exe (exit 1) # [win]
 
 about:
   home: http://github.com/gouarin/splinart-cpp
   license: BSD
   license_family: BSD
-  summary: 'spline art generator'
-  description: 'spline art generator'
+  summary: "spline art generator"
+  description: "spline art generator"
 
 extra:
-  recipe-maintainers: 'loic.gouarin@gmail.com'
+  recipe-maintainers: "loic.gouarin@gmail.com"

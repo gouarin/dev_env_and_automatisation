@@ -1,0 +1,14 @@
+c_stdlib:
+- vs
+channel_sources:
+- conda-forge
+channel_targets:
+- conda-forge main
+cxx_compiler:
+- vs2019
+fmt:
+- '11'
+pugixml:
+- '1.14'
+target_platform:
+- win-64
