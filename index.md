@@ -34,12 +34,7 @@ Pour chaque partie, vous trouverez une correction dans le répertoire `material`
 
 Si vous êtes impatient et que vous voulez voir à quoi ressemble un projet prenant en compte l'ensemble de ces notions, vous pouvez aller voir le projet **splinart-cpp** en cliquant sur l'image.
 
-<a href="https://github.com/gouarin/splinart-cpp">
-
-:::{figure} logo/dark_logo.png
-:::
-
-</a>
+[![Logo du projet splinart-cpp](logo/dark_logo.png)](https://github.com/gouarin/splinart-cpp)
 
 Si vous avez apprécié le contenu de ce document, n'hésitez pas à mettre une petite étoile !!
 
