@@ -107,9 +107,9 @@ Il reste à créer le travail qui se déclenche uniquement si le nombre de commi
     steps:
       - uses: actions/checkout@v3
 
-      - uses: prefix-dev/setup-pixi@v0.8.1
+      - uses: prefix-dev/setup-pixi@v0.11.3
         with:
-          pixi-version: v0.40.2
+          pixi-version: v0.84.1
           cache: true
 
       - name: Configure

@@ -304,6 +304,7 @@ jobs:
 
             - uses: prefix-dev/setup-pixi@v0.11.3
               with:
+                  pixi-version: v0.84.1
                   cache: true
 
             - name: Build the package
