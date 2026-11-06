@@ -158,7 +158,7 @@ La construction d'un paquet conda se fait à partir d'une recette. Copiez le ré
 
 - un fichier `recipe.yaml` qui décrit le paquet : son nom, sa version, où trouver les sources, les dépendances nécessaires à la construction et à l'exécution, et un test ;
 - un fichier `build.sh` qui décrit comment construire le paquet sous Linux et macOS ;
-- un fichier `bld.bat` qui décrit comment construire le paquet sous Windows.
+- un fichier `build.bat` qui décrit comment construire le paquet sous Windows.
 
 ```{literalinclude} ../material/6.packaging/required_files/recipe/recipe.yaml
 :language: yaml
@@ -171,24 +171,20 @@ Quelques remarques sur cette recette
 - `${{ compiler("cxx") }}` choisit le compilateur C++ adapté à chaque OS.
 - Le test vérifie simplement que l'exécutable installé répond à l'option `--help`.
 
-Nous construisons le paquet avec [rattler-build](https://rattler.build). Ajoutez-le à votre environnement
+Nous construisons le paquet avec [rattler-build](https://rattler.build). Nous ne l'ajoutons pas à l'environnement du projet : rattler-build y amènerait des versions plus récentes de certaines bibliothèques (comme `libcxx` sous macOS) qui ne fonctionnent plus avec le compilateur du projet. La commande `pixi exec` lance un outil dans un environnement temporaire, séparé de celui du projet.
 
-```bash
-pixi add rattler-build
-```
-
-Puis lancez la construction
+Lancez la construction
 
 ::::{tab-set}
 :::{tab-item}Linux & macOS
 ```bash
-VERSION=$(cat version.txt) pixi run rattler-build build --recipe recipe --output-dir output
+VERSION=$(cat version.txt) pixi exec rattler-build build --recipe recipe --output-dir output
 ```
 :::
 :::{tab-item}Windows
 ```powershell
 $env:VERSION = Get-Content version.txt
-pixi run rattler-build build --recipe recipe --output-dir output
+pixi exec rattler-build build --recipe recipe --output-dir output
 ```
 :::
 ::::
@@ -229,13 +225,13 @@ Vous pouvez maintenant déposer le paquet sur votre compte
 ::::{tab-set}
 :::{tab-item}Linux & macOS
 ```bash
-ANACONDA_API_KEY=votre_token pixi run rattler-build upload anaconda --owner votre_compte output/*/splinart-cpp-*.conda
+ANACONDA_API_KEY=votre_token pixi exec rattler-build upload anaconda --owner votre_compte output/*/splinart-cpp-*.conda
 ```
 :::
 :::{tab-item}Windows
 ```powershell
 $env:ANACONDA_API_KEY = "votre_token"
-pixi run rattler-build upload anaconda --owner votre_compte output\win-64\splinart-cpp-0.0.1-xxx_0.conda
+pixi exec rattler-build upload anaconda --owner votre_compte output\win-64\splinart-cpp-0.0.1-xxx_0.conda
 ```
 
 Remplacez le nom du fichier par celui que rattler-build a produit.
@@ -305,19 +301,21 @@ jobs:
             - uses: prefix-dev/setup-pixi@v0.11.3
               with:
                   pixi-version: v0.84.1
-                  cache: true
+                  run-install: false
+
+            - name: Read the version
+              shell: bash
+              run: echo "VERSION=$(cat version.txt)" >> "$GITHUB_ENV"
 
             - name: Build the package
-              shell: bash
-              run: |
-                  VERSION=$(cat version.txt) pixi run rattler-build build --recipe recipe --output-dir output
+              run: pixi exec rattler-build build --recipe recipe --output-dir output
 
             - name: Upload on anaconda.org
               if: github.event_name == 'release'
               shell: bash
               env:
                   ANACONDA_API_KEY: ${{ secrets.ANACONDA_TOKEN }}
-              run: pixi run rattler-build upload anaconda --owner votre_compte output/*/splinart-cpp-*.conda
+              run: pixi exec rattler-build upload anaconda --owner votre_compte output/*/splinart-cpp-*.conda
 ```
 
 Plusieurs remarques
@@ -325,7 +323,9 @@ Plusieurs remarques
 - Nous construisons le paquet à chaque pull request pour être sûr de ne pas avoir cassé sa construction.
 - Nous pouvons aussi lancer la construction à la main (`workflow_dispatch`).
 - La matrice couvre Linux, macOS Intel (`macos-15-intel`), macOS Apple Silicon (`macos-latest`) et Windows.
-- Les étapes utilisent `shell: bash` sur tous les OS, y compris Windows où GitHub fournit bash : la même commande sert partout. rattler-build choisit lui-même `build.sh` ou `bld.bat`.
+- `run-install: false` installe pixi sans installer l'environnement du projet, dont la construction n'a pas besoin.
+- L'étape `Read the version` écrit `VERSION` dans le fichier `$GITHUB_ENV` : les étapes suivantes du travail voient cette variable d'environnement. Elle utilise `shell: bash`, disponible sur tous les OS, y compris Windows.
+- La construction tourne dans le shell par défaut de chaque OS (PowerShell sous Windows). rattler-build choisit lui-même `build.sh` ou `build.bat`.
 - Nous ne déposons le paquet sur anaconda.org que si nous sommes dans un événement `release`
   ```yaml
   - name: Upload on anaconda.org
