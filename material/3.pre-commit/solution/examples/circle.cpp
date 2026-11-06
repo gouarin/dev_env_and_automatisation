@@ -16,7 +16,8 @@ int main(int argc, char* argv[])
     std::size_t img_size   = 1000;
     std::size_t nb_samples = 10000;
     splinart::Circle circle({0.5, 0.5}, 0.3, 75);
-    auto img = splinart::build_img({img_size, img_size}, {circle}, nb_samples);
+    std::vector<splinart::Circle> circles{circle};
+    auto img = splinart::build_img({img_size, img_size}, circles, nb_samples);
     splinart::imshow(img);
     return 0;
 }

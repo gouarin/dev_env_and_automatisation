@@ -138,4 +138,8 @@ La partie `Configure` est propre au projet. Il nous faut un certain nombre d'inf
 
 Ajoutez l'ensemble de ces sections et testez votre workflow.
 
+:::{note}
+Le premier passage de `clang-tidy` échoue : le code ne respecte pas encore les règles de `.clang-tidy`, par exemple le nom de la fonction `drawPiXel` ou des variables qui pourraient être `const`. C'est le rôle de cet outil. Corrigez les erreurs signalées jusqu'à ce que le travail passe. Une correction se trouve dans `material/5.long-run/solution`.
+:::
+
 Vérifiez que tout fonctionne bien, puis faites un `Squash and merge`.
