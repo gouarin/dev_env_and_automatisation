@@ -21,9 +21,6 @@ jobs:
                   pixi-version: v0.40.2
                   cache: true
 
-            - name: cppcheck installation
-              run: pixi add cppcheck
-
             - name: Configure
               run: |
                   cmake -S . -B .build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=ON
@@ -35,7 +32,7 @@ jobs:
                   if [[ -s cppcheck_err.txt ]];
                   then
                     cat cppcheck_err.txt
-                    exit -1
+                    exit 1
                   fi
 
     tests:
