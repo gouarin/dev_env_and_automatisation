@@ -1,4 +1,4 @@
-cmake -S . -G "Ninja" ^ -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% -D CMAKE_BUILD_TYPE=Release -B build
+cmake -S . -B build -G Ninja %CMAKE_ARGS% -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DCMAKE_BUILD_TYPE=Release
 if errorlevel 1 exit 1
 
 cmake --build build --target install

@@ -146,64 +146,76 @@ Vous pouvez également tester en faisant des pull request qui mixent des `fix` e
 
 ## Packaging conda
 
-Nous allons montrer dans cette section comment déclencher la construction d'un package conda lorsqu'une nouvelle version est disponible et que ce package soit directement accessible sur votre `channel` conda.
+Nous allons montrer dans cette section comment déclencher la construction d'un paquet conda lorsqu'une nouvelle version est disponible, et comment le rendre directement accessible sur votre `channel` conda.
 
 :::{attention}
-Nous faisons cela à titre d'exemple. Si vous voulez créer un package conda et le distribuer, il est préférable de le mettre sur [conda-forge](https://conda-forge.org/docs/maintainer/adding_pkgs.html) pour plus de visibilité.
+Nous faisons cela à titre d'exemple. Si vous voulez créer un paquet conda et le distribuer, il est préférable de le mettre sur [conda-forge](https://conda-forge.org/docs/maintainer/adding_pkgs.html) pour plus de visibilité.
 :::
 
 ### Construction locale
 
-La construction d'un package conda se fait en créant une recette. Celle-ci est dans le répertoire `6.packaging/required_file/recipe`. Ce dossier est à mettre à la racine de votre dépôt. Il contient
+La construction d'un paquet conda se fait à partir d'une recette. Copiez le répertoire `material/6.packaging/required_files/recipe` à la racine de votre dépôt. Il contient
 
-- Un fichier `meta.yaml` décrivant la version du paquet, où trouver le paquet, quelles sont les dépendances au moment du build et du runtime...
-- Un fichier `build.sh` qui décrit comment construire le paquet sous linux et macos.
-- Un fichier `bld.bat` qui décrit comment construire le paquet sous windows.
+- un fichier `recipe.yaml` qui décrit le paquet : son nom, sa version, où trouver les sources, les dépendances nécessaires à la construction et à l'exécution, et un test ;
+- un fichier `build.sh` qui décrit comment construire le paquet sous Linux et macOS ;
+- un fichier `bld.bat` qui décrit comment construire le paquet sous Windows.
 
-Nous allons dans un premier temps tester localement la construction de notre package. Pour cela, il vous faut installer `conda-build` dans `pixi`. Une fois que c'est fait, éditez le fichier `meta.yaml` et changez la version en fonction de ce que vous avez sur votre dépôt et le champ `git_url` afin de mettre votre adresse de dépôt.
-
-Il vous suffit ensuite de faire
-
-```bash
-conda build recipe
+```{literalinclude} ../material/6.packaging/required_files/recipe/recipe.yaml
+:language: yaml
 ```
 
-Si tout s'est bien passé, vous devriez voir où est stocké le package : probablement dans un répertoire appelé `conda-build` dans votre répertoire `$HOME`. Nous allons essayer de l'installer localement avec `pixi`. Pour cela, vous allez devoir modifier temporairement le fichier `pixi.toml` à deux endroits
+Quelques remarques sur cette recette
 
-- la partie `channels` doit contenir au début de la liste votre répertoire `conda-build`
-  ```toml
-  channels = ["file:///path/to/your/conda-bld/", "conda-forge"]
-  ```
+- La version est lue dans la variable d'environnement `VERSION`. Nous la remplirons à partir du fichier `version.txt`.
+- `source: path: ..` indique que les sources sont celles de votre dépôt, juste au-dessus du répertoire `recipe`. Les fichiers ignorés par git, comme le répertoire `.pixi`, ne sont pas copiés.
+- `${{ compiler("cxx") }}` choisit le compilateur C++ adapté à chaque OS.
+- Le test vérifie simplement que l'exécutable installé répond à l'option `--help`.
 
-- la partie `platforms` ne doit contenir que votre plateforme, car `pixi` va interroger vos différentes channels pour l'ensemble des plateformes concernées.
-
-Il ne reste plus qu'à faire
+Nous construisons le paquet avec [rattler-build](https://rattler.build). Ajoutez-le à votre environnement
 
 ```bash
+pixi add rattler-build
+```
+
+Puis lancez la construction
+
+::::{tab-set}
+:::{tab-item}Linux & macOS
+```bash
+VERSION=$(cat version.txt) pixi run rattler-build build --recipe recipe --output-dir output
+```
+:::
+:::{tab-item}Windows
+```powershell
+$env:VERSION = Get-Content version.txt
+pixi run rattler-build build --recipe recipe --output-dir output
+```
+:::
+::::
+
+Si tout s'est bien passé, le paquet se trouve dans le répertoire `output`, dans un sous-répertoire qui porte le nom de votre plateforme (par exemple `output/linux-64/splinart-cpp-0.0.1-h....conda`). Ajoutez `output` à votre fichier `.gitignore`.
+
+:::{note}
+Si vous reconstruisez la même version après avoir modifié la recette, supprimez d'abord le répertoire `output`. Sinon, l'index du répertoire peut garder l'empreinte de l'ancien paquet et pixi refusera de l'installer.
+:::
+
+Nous allons essayer d'installer ce paquet avec pixi. Le répertoire `output` est un `channel` conda local. Créez un projet de test en dehors de votre dépôt, ajoutez-lui ce `channel` en premier, puis installez le paquet
+
+```bash
+pixi init test-splinart
+cd test-splinart
+pixi workspace channel add --prepend file:///chemin/vers/splinart-cpp/output
 pixi add splinart-cpp
+pixi run splinart-cpp
 ```
 
-et vérifiez que vous avez bien l'exécutable.
+Une fenêtre doit s'ouvrir avec un cercle.
 
 ### Anaconda
 
-Nous allons maintenant essayer de mettre le package construit localement sur [anaconda](https://anaconda.org/) pour être sûr que tout le processus fonctionne avant de l'automatiser. Vous devez donc vous créer un compte pour créer votre propre `channel`.
+Nous allons maintenant mettre le paquet construit localement sur [anaconda.org](https://anaconda.org/) pour être sûr que tout le processus fonctionne avant de l'automatiser. Vous devez donc vous créer un compte : son nom sera celui de votre `channel`.
 
-Une fois le compte créé, vous pouvez mettre votre paquet sur votre compte. Il vous faut installer `anaconda-client` via `pixi`, puis
-
-```bash
-anaconda upload /path_to/splinart-*.tar.bz2
-```
-
-Si tout s'est bien passé, vous devriez voir votre paquet sur votre compte anaconda. Si vous voulez tester l'installation, éditez votre fichier `pixi.toml` et ajoutez dans les channels à côté de `conda-forge` le nom de votre `channel`.
-
-:::{important}
-Retirez le chemin local ajouté à la section précédente pour ne pas avoir d'effet de bord.
-:::
-
-Pour pouvoir déposer un paquet sur anaconda depuis une action, nous devons nous authentifier. Nous allons utiliser un token pour cela.
-
-Retournez sur votre compte anaconda puis allez sur votre avatar et choisissez `Settings`. Allez ensuite dans `Access` et créez un token qui a les droits suivants
+Pour déposer un paquet, que ce soit depuis votre machine ou depuis une action, il faut s'authentifier avec un token. Une fois le compte créé, cliquez sur votre avatar et choisissez `Settings`. Allez ensuite dans `Access` et créez un token qui a les droits suivants
 
 :::{figure} ./figures/anaconda.png
 :::
@@ -212,9 +224,35 @@ Retournez sur votre compte anaconda puis allez sur votre avatar et choisissez `S
 Le nom que vous donnez au token n'a pas de réelle importance.
 :::
 
+Vous pouvez maintenant déposer le paquet sur votre compte
+
+::::{tab-set}
+:::{tab-item}Linux & macOS
+```bash
+ANACONDA_API_KEY=votre_token pixi run rattler-build upload anaconda --owner votre_compte output/*/splinart-cpp-*.conda
+```
+:::
+:::{tab-item}Windows
+```powershell
+$env:ANACONDA_API_KEY = "votre_token"
+pixi run rattler-build upload anaconda --owner votre_compte output\win-64\splinart-cpp-0.0.1-xxx_0.conda
+```
+
+Remplacez le nom du fichier par celui que rattler-build a produit.
+:::
+::::
+
+Si tout s'est bien passé, vous devriez voir votre paquet sur votre compte anaconda. Pour tester l'installation, retournez dans le projet `test-splinart`, remplacez le `channel` local par le vôtre et réinstallez le paquet
+
+```bash
+pixi workspace channel remove file:///chemin/vers/splinart-cpp/output
+pixi workspace channel add --prepend votre_compte
+pixi add splinart-cpp
+```
+
 ### Construction et déploiement du paquet conda
 
-Maintenant que nous avons pu vérifier que tout se passait bien localement, nous allons maintenant ajouter une action qui se déclenche lorsqu'une nouvelle version est disponible, qui construit le paquet conda via `conda-build` et qui met le paquet sur votre compte anaconda via `anaconda-client` et le token créé précédemment.
+Maintenant que nous avons vérifié que tout se passe bien localement, nous allons ajouter une action qui construit le paquet sur Linux, macOS et Windows, et qui le dépose sur votre compte anaconda lorsqu'une nouvelle version est publiée.
 
 Il y a ici deux ingrédients
 
@@ -227,110 +265,77 @@ Il y a ici deux ingrédients
         - published
   ```
 
-- Il nous faut également renseigner le token pour l'action en ajoutant un `secrets` dans le dépôt GitHub.
+- Il nous faut également donner le token à l'action en ajoutant un `secret` dans le dépôt GitHub.
 
   :::{attention}
   Il ne faut jamais mettre de mots de passe ou de tokens en clair dans vos fichiers !
   :::
 
+  Pour ajouter le token dans les `secrets` de GitHub, allez dans les `Settings` de votre dépôt puis dans `Secrets and variables -> Actions`. Cliquez ensuite sur `New repository secret`. Donnez-lui un nom et copiez-collez le token créé sur votre compte anaconda.
 
-    Pour ajouter le token conda dans les `secrets` de GitHub, il faut aller dans les `Settings` votre dépôt puis dans `Secrets and variables -> Actions`. Cliquez ensuite dans `New repository secret`. Donnez un nom et copiez-collez le token que vous pouvez retrouver sur votre compte anaconda.
+  :::{attention}
+  Le nom du `secret` sera celui utilisé dans l'action.
+  :::
 
-    :::{attention}
-    Le nom du `secret` sera celui utiliser dans l'action.
-    :::
-
-
-  Voici à quoi ressemble l'action
+Voici à quoi ressemble l'action
 
 ```yaml
 name: Publish on conda
 
 on:
+    pull_request:
     release:
         types: [published]
     workflow_dispatch:
 
 jobs:
-    upload_on_conda:
+    build:
         runs-on: ${{ matrix.os }}
         strategy:
             fail-fast: false
             matrix:
-                include:
-                    - os: windows-latest
-                      CONFIG: win_64_
-                    - os: ubuntu-24.04
-                      CONFIG: linux_64_.yaml
-                    - os: macos-13
-                      CONFIG: osx_64_.yaml
-                    - os: macos-latest
-                      CONFIG: osx_arm64_.yaml
+                os:
+                    - ubuntu-latest
+                    - macos-15-intel
+                    - macos-latest
+                    - windows-latest
         steps:
-            - uses: actions/checkout@v1
+            - uses: actions/checkout@v7
 
-            - uses: prefix-dev/setup-pixi@v0.8.1
+            - uses: prefix-dev/setup-pixi@v0.11.3
               with:
-                  pixi-version: v0.40.2
                   cache: true
 
-            - name: Install conda-build and anaconda-client
-              run: pixi add conda-build anaconda-client
-
-            - name: Set version (Windows)
-              if: runner.os == 'Windows'
+            - name: Build the package
+              shell: bash
               run: |
-                  $VER = Get-Content version.txt
-                  echo "VERSION=$VER" >> $env:GITHUB_ENV
+                  VERSION=$(cat version.txt) pixi run rattler-build build --recipe recipe --output-dir output
 
-            - name: Set version (Unix)
-              if: runner.os != 'Windows'
-              run: |
-                  VER=$(cat version.txt)
-                  echo "VERSION=$VER" >> $GITHUB_ENV
-
-            - name: Build the recipe
-              if: runner.os == 'Windows'
-              shell: pixi run bash {0}
-              working-directory: conda
-              env:
-                  CONFIG: ${{ matrix.CONFIG }}
-              run: |
-                  conda config --add channels conda-forge
-                  ./.ci_support/run_win_build.bat
-
-            - name: Build the recipe
-              if: runner.os != 'Windows'
-              shell: pixi run bash {0}
-              working-directory: conda
-              run: |
-                  conda config --add channels conda-forge
-                  conda build recipe -m .ci_support/${{ matrix.CONFIG }} --suppress-variables --output-folder conda-bld
-
-            - name: upload on conda
+            - name: Upload on anaconda.org
               if: github.event_name == 'release'
-              shell: pixi run bash {0}
-              run: anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force conda/conda-bld/*/splinart-*.conda
+              shell: bash
+              env:
+                  ANACONDA_API_KEY: ${{ secrets.ANACONDA_TOKEN }}
+              run: pixi run rattler-build upload anaconda --owner votre_compte output/*/splinart-cpp-*.conda
 ```
 
-Plusieurs remarques :
+Plusieurs remarques
 
-- Nous souhaitons pouvoir exécuter à chaque pull request pour être sûr de ne pas avoir cassé la construction du paquet.
-- Nous souhaitons pouvoir exécuter la construction manuellement (`workflow_dispatch`).
-- Nous ne mettons le paquet sur le compte conda que si nous sommes dans un événement `release`
+- Nous construisons le paquet à chaque pull request pour être sûr de ne pas avoir cassé sa construction.
+- Nous pouvons aussi lancer la construction à la main (`workflow_dispatch`).
+- La matrice couvre Linux, macOS Intel (`macos-15-intel`), macOS Apple Silicon (`macos-latest`) et Windows.
+- Les étapes utilisent `shell: bash` sur tous les OS, y compris Windows où GitHub fournit bash : la même commande sert partout. rattler-build choisit lui-même `build.sh` ou `bld.bat`.
+- Nous ne déposons le paquet sur anaconda.org que si nous sommes dans un événement `release`
   ```yaml
-  - name: upload on conda
+  - name: Upload on anaconda.org
     if: github.event_name == 'release'
   ```
-- Nous nous servons du `secret` mis précédemment pour mettre le paquet sur le compte conda
-  ```yaml
-  run: anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload --force $HOME/conda-bld/*/splinart-*.tar.bz2
-  ```
+- Nous nous servons du `secret` ajouté précédemment, transmis à rattler-build par la variable d'environnement `ANACONDA_API_KEY`.
 
   :::{note}
-  Nous avons choisi ici `ANACONDA_TOKEN` comme nom de `secret`. Pensez à le remplacer par le nom que vous aurez choisi.
+  Nous avons choisi ici `ANACONDA_TOKEN` comme nom de `secret`. Pensez à le remplacer par le nom que vous aurez choisi, et `votre_compte` par le nom de votre compte anaconda.
   :::
 
 Si la pull request arrive à construire le paquet conda, vous pouvez fusionner cette branche dans la branche principale.
 
-Testez cette action en créant au préalable une nouvelle version: c'est-à-dire en exécutant deux fois l'action `release-please` (une fois pour créer une pull request avec le changelog et la montée de version et une deuxième fois pour créer le tag et l'archive).
+Testez cette action en créant au préalable une nouvelle version : c'est-à-dire en exécutant deux fois l'action `release-please` (une fois pour créer une pull request avec le changelog et la montée de version et une deuxième fois pour créer le tag et l'archive).
