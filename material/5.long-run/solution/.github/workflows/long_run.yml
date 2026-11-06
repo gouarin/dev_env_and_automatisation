@@ -1,6 +1,7 @@
 name: "long check"
 
 on:
+    # Lets you test the workflow in the pull request: a schedule only runs on the default branch.
     pull_request:
     schedule:
         - cron: "0 0 * * *"
@@ -19,7 +20,7 @@ jobs:
     clang-tidy-check:
         needs: check_new_commit
         if: needs.check_new_commit.outputs.nb_commits > 0
-        runs-on: macos-latest
+        runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
 
@@ -28,17 +29,10 @@ jobs:
                   pixi-version: v0.40.2
                   cache: true
 
-            - name: clang-tidy and pip installation
-              run: pixi add clang-tools pip
-
-            - name: ccompdb installation
-              shell: pixi run bash {0}
-              run: pip install compdb
-
             - name: Configure
               shell: pixi run bash {0}
               run: |
-                  cmake . -Bbuild -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_DEMOS=ON
+                  cmake . -Bbuild -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=ON
                   compdb -p build list > compile_commands.json
 
             - name: run clang-tidy on splinart-cpp

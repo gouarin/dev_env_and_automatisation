@@ -87,7 +87,17 @@ GitHub Actions propose de définir des sorties : [Defining outputs for jobs](htt
 
 ## Mise en place du linter
 
-Nous avons fait le plus difficile. Il nous reste à présent à créer le travail qui se déclenche uniquement si le nombre de commits est strictement positif en utilisant `needs`, `if` et la variable `nb_commits`. Ca donne
+Nous avons fait le plus difficile. Avant d'écrire le travail, ajoutez à l'environnement les deux outils dont il a besoin
+
+```bash
+pixi add "clang==15.0.7"
+pixi add --pypi compdb
+```
+
+- `clang` fournit les en-têtes internes du compilateur (comme `stddef.h`). Sans lui, `clang-tidy` ne trouve pas ces fichiers sous Linux et s'arrête en erreur. Prenez la même version que le paquet `clang-tools` de votre `pixi.toml`.
+- [compdb](https://github.com/Sarcasm/compdb) n'existe pas sur conda-forge. L'option `--pypi` l'installe depuis PyPI, et pixi l'enregistre dans `pixi.toml` et `pixi.lock` comme les autres dépendances.
+
+Il reste à créer le travail qui se déclenche uniquement si le nombre de commits est strictement positif en utilisant `needs`, `if` et la variable `nb_commits`. Ça donne
 
 ```yaml
   clang-tidy-check:
@@ -106,7 +116,6 @@ Nous avons fait le plus difficile. Il nous reste à présent à créer le travai
         shell: pixi run bash {0}
         run: |
           cmake . -Bbuild -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=ON
-          pip install compdb
           compdb -p build list > compile_commands.json
 
       - name: run clang-tidy
@@ -119,12 +128,12 @@ Nous avons fait le plus difficile. Il nous reste à présent à créer le travai
 Vous aurez également besoin de mettre à la racine du projet le fichier `.clang-tidy` qui définit la configuration souhaitée. Ce fichier se trouve dans le répertoire `material/5.long-run/required_files/`.
 :::
 
-La partie `Configure` est propre au projet. Il nous faut un certain nombre d'informations que nous pouvons retrouver via CMake et l'option `CMAKE_EXPORT_COMPILE_COMMANDS` pour pouvoir analyser le code source. Malheureusement, cette commande de donne que les commande de compilation pour les bibliothèques et les exécutables. Imaginez que vous avez un projet [header only](https://en.wikipedia.org/wiki/Header-only) et le fichier `compile_commands.json` généré par la commande CMake sera vide. C'est pour cette raison que nous utilisons un autre outil ([compdb](https://github.com/Sarcasm/compdb)) qui nous permet d'ajouter les fichiers `hpp`.
+La partie `Configure` est propre au projet. Il nous faut un certain nombre d'informations que nous pouvons retrouver via CMake et l'option `CMAKE_EXPORT_COMPILE_COMMANDS` pour pouvoir analyser le code source. Malheureusement, cette commande ne donne que les commandes de compilation pour les bibliothèques et les exécutables. Imaginez que vous avez un projet [header only](https://en.wikipedia.org/wiki/Header-only) et le fichier `compile_commands.json` généré par la commande CMake sera vide. C'est pour cette raison que nous utilisons compdb, qui ajoute les fichiers `hpp`.
 
 :::{note}Remarques
 - Nous n'avons pas installé `clang-tidy` car il est déjà installé par `pixi` via le paquet `clang-tools`.
 - `run-clang-tidy` fait partie de ce paquet. Il permet d'exécuter `clang-tidy` à partir du fichier `compile_commands.json`.
-- Nous n'avons pas parlé de la configuration, car elle était déjà dans le dépôt initial (voir le fichier `.clang-tidy` à la racine du projet).
+- Nous ne détaillons pas la configuration contenue dans le fichier `.clang-tidy`. Ouvrez-le pour voir les règles activées.
 :::
 
 Ajoutez l'ensemble de ces sections et testez votre workflow.
