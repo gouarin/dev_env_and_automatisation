@@ -38,17 +38,17 @@ doc = { cmd = "cd doc; make html" }
 Exécutez cette tâche et vérifiez que tout se passe bien.
 
 :::{tip} html
-Vous devriez avoir un dossier `html` qui s'est créé. Il vous suffit d'ouvrir dans votre navigateur le fichier `index.html`.
+Vous devriez avoir un dossier `doc/build/html` qui s'est créé. Il vous suffit d'ouvrir dans votre navigateur le fichier `index.html`.
 :::
 
 ## Mise en place de l'action
 
 Nous allons ajouter une action pour la documentation dans le dossier `.github/workflows` que nous appelons `doc.yml` qui se déclenchera au moment d'une pull request.
 
-Écrivez l'action en vous appuyant sur ce que vous avez fait précédemment. Pour le moment, nous souhaitons juste faire ce que nous avons fait en local et mettre le répertoire `html` dans une archive : voir l'action [upload-pages-artifact](https://github.com/actions/upload-pages-artifact).
+Écrivez l'action en vous appuyant sur ce que vous avez fait précédemment. Pour le moment, nous souhaitons juste faire ce que nous avons fait en local et mettre le répertoire `doc/build/html` dans une archive : voir l'action [upload-pages-artifact](https://github.com/actions/upload-pages-artifact).
 
 :::{tip} Artifact
-A la fin de cette étape, vous devriez avoir accès à une archive en allant dans les actions de votre dépôt. Si vous téléchargez cette archive et que vous regardez ce qu'il y a dedans, vous devriez retrouver le contenu du répertoire `html`.
+A la fin de cette étape, vous devriez avoir accès à une archive en allant dans les actions de votre dépôt. Si vous téléchargez cette archive et que vous regardez ce qu'il y a dedans, vous devriez retrouver le contenu du répertoire `doc/build/html`.
 :::
 
 ## Configuration de GitHub Pages
@@ -82,10 +82,13 @@ Vous pouvez à présent utiliser l'artifact créé précédemment pour GitHub Pa
         contents: read
         pages: write
         id-token: write
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
       steps:
         - name: Deploy to GitHub Pages
           id: deployment
-          uses: actions/deploy-pages@v2
+          uses: actions/deploy-pages@v5
 ```
 
 :::{note}Plusieurs remarques sur cette étape
@@ -98,6 +101,7 @@ Vous pouvez à présent utiliser l'artifact créé précédemment pour GitHub Pa
       pages: write
       id-token: write
     ```
+- Le bloc `environment` déclare le déploiement dans l'environnement `github-pages` que GitHub crée quand vous activez Pages. L'adresse du site s'affiche alors dans le résumé du workflow.
 :::
 
 À la fin du processus, vous devriez être en mesure de voir la documentation à l'adresse suivante `https://votre_login.github.io/nom_projet` ou `https://votre_organisation.github.io/nom_projet`.
@@ -112,7 +116,7 @@ Il y a plusieurs choses qui ne vont pas dans ce que nous venons de faire.
 
 Nous allons détailler chacun de ces points et voir comment faire avec GitHub Actions pour avoir un meilleur contrôle.
 
-## Définir quand déclencher le workfow
+## Définir quand déclencher le workflow
 
 Nous allons répondre ici aux points 1 et 4 où nous souhaitons avoir un déclenchement un peu plus fin. En effet, nous souhaitons que le workflow soit déclenché que si la pull request porte sur la branche principale. Nous aimerions par ailleurs que le workflow se déclenche au moment d'un `push` dans cette même branche principal. Enfin, nous aimerions pouvoir déclencher manuellement.
 
@@ -124,7 +128,7 @@ Nous pouvons spécifier, lorsque nous sommes dans le cas d'une pull request, la 
 on:
   pull_request:
     branches:
-      main
+      - main
 ```
 
 Ainsi, si vous faites une pull request sur une branche `dev`, ce workflow ne sera jamais exécuté.
@@ -135,14 +139,14 @@ Vous avez également l'événement `push` qui vous permet de déclencher le work
 on:
   push:
     branches:
-      main
+      - main
 ```
 
 Enfin, nous voulons pouvoir déclencher manuellement : cela se fait via l'événement `workflow_dispatch`.
 
 Modifiez le workflow pour prendre en compte ce déclenchement plus fin pour la génération de la documentation.
 
-Concernant le point 4, si nous ne faisons qu'écrire de la documentation dans le répertoire `doc`, il n'est peut-être pas nécessaire d'exécuter le worflow défini dans `ci.yml` car le code n'aura pas changé. Toujours dans la partie gérant les événements, il est possible d'indiquer des chemins indiquant que le workflow ne se déclenchera que si les changements ont été effectués dans ceux-ci. Voici un exemple
+Concernant le point 4, si nous ne faisons qu'écrire de la documentation dans le répertoire `doc`, il n'est peut-être pas nécessaire d'exécuter le workflow défini dans `ci.yml` car le code n'aura pas changé. Toujours dans la partie gérant les événements, il est possible d'indiquer des chemins indiquant que le workflow ne se déclenchera que si les changements ont été effectués dans ceux-ci. Voici un exemple
 
 ```yaml
 on:
@@ -152,7 +156,7 @@ on:
       - '.github/workflows/doc.yml'
 ```
 
-Ici, le worflow sera exécuté que si le répertoire `doc` ou le workflow sont modifiés.
+Ici, le workflow sera exécuté que si le répertoire `doc` ou le workflow sont modifiés.
 
 Nous pouvons également exclure des chemins comme dans l'exemple suivant
 
@@ -187,7 +191,7 @@ jobs:
       if: github.repository == 'gouarin/splinart-cpp' && github.ref == 'refs/heads/main'
 ```
 
-Modifiez le worklfow `doc.yml` pour que
+Modifiez le workflow `doc.yml` pour que
 - la compilation de la documentation ne se fasse que si vous êtes dans votre dépôt et non dans un fork,
 - la mise en place de GitHub Pages à partir de l'artifact ne se fasse que si vous êtes dans votre dépôt et non dans un fork et que vous êtes sur la branche principale.
 
@@ -269,7 +273,7 @@ myst_enable_extensions = [
 ```
 :::
 
-Nous allons maintenant changer le thème par défaut en mettant [pydata-sphinx-theme](https://pydata-sphinx-theme.readthedocs.io) dnas le fichier de configuration
+Nous allons maintenant changer le thème par défaut en mettant [pydata-sphinx-theme](https://pydata-sphinx-theme.readthedocs.io) dans le fichier de configuration
 
 ```python
 html_theme = 'pydata_sphinx_theme'
@@ -277,32 +281,12 @@ html_theme = 'pydata_sphinx_theme'
 
 Enfin, il faut modifier le fichier `Makefile` qui se trouve dans le répertoire `doc` pour que Doxygen soit déclenché à chaque fois que vous lancez la génération de la documentation. Voici le `Makefile` complet
 
-```makefile
-# Minimal makefile for Sphinx documentation
-#
-
-# You can set these variables from the command line, and also
-# from the environment for the first two.
-SPHINXOPTS    ?=
-SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     = source
-BUILDDIR      = build
-
-# Put it first so that "make" without argument is like "make help".
-help:
-    @$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-
-.PHONY: help Makefile
-
-# Catch-all target: route all unknown targets to Sphinx using the new
-# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile
-    doxygen
-    @$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+```{literalinclude} ../material/4.documentation/required_files/doc/Makefile
+:language: makefile
 ```
 
 :::{attention}
 Si vous êtes sous Windows, c'est le fichier `make.bat` qu'il faut modifier.
 :::
 
-Il ne vous reste plus qu'à écrire la documentation. Nous vous laissons regarder dans le répertoire `material/4.documentation/required_files/doc/source` pour voir un exemple. Das le répertoire `api`, vous verrez l'utilisation de Breathe.
+Il ne vous reste plus qu'à écrire la documentation. Nous vous laissons regarder dans le répertoire `material/4.documentation/required_files/doc/source` pour voir un exemple. Dans le répertoire `api`, vous verrez l'utilisation de Breathe.

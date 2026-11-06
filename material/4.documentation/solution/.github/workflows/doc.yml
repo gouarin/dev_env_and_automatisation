@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
     build:
-        # Don't run on forks
+        # Don't run on forks (replace with your own owner/repository)
         if: github.repository == 'gouarin/splinart-cpp'
         runs-on: ubuntu-latest
         steps:
@@ -31,7 +31,7 @@ jobs:
               run: pixi run doc
 
             - name: Upload artifact
-              uses: actions/upload-pages-artifact@v2
+              uses: actions/upload-pages-artifact@v5
               with:
                   path: "doc/build/html"
 
@@ -43,7 +43,10 @@ jobs:
             contents: read
             pages: write
             id-token: write
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
         steps:
             - name: Deploy to GitHub Pages
               id: deployment
-              uses: actions/deploy-pages@v2
+              uses: actions/deploy-pages@v5
