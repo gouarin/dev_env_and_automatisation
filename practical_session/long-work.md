@@ -61,7 +61,7 @@ Voici un exemple de travail qui calcule le nombre de commits depuis 24h à parti
   check_new_commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - name: new_commits
         run: echo "nb_commits=$(git log --oneline --since '24 hours ago' | wc -l)"
@@ -77,7 +77,7 @@ GitHub Actions propose de définir des sorties : [Defining outputs for jobs](htt
     outputs:
       nb_commits: ${{ steps.new_commits.outputs.nb_commits }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - id: new_commits
         run: echo "nb_commits=$(git log --oneline --since '24 hours ago' | wc -l)" >> $GITHUB_OUTPUT
@@ -133,7 +133,7 @@ Il reste à créer le travail qui se déclenche uniquement si le nombre de commi
     if: needs.check_new_commit.outputs.nb_commits > 0
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - uses: prefix-dev/setup-pixi@v0.11.3
         with:
