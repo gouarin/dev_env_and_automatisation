@@ -82,23 +82,13 @@ Nous allons utiliser cette action : [release-please-action](https://github.com/m
 
 `release-please` a besoin de fichiers de configuration pour contrôler son comportement. Voici les deux fichiers à ajouter à la racine du dépôt
 
-- `release-please-config.json`
-    ```json
-    {
-        "release-type": "simple",
-        "include-component-in-tag": false,
-        "include-v-in-tag": true,
-        "changelog-path": "CHANGELOG.md",
-        "bump-minor-pre-major": true
-    }
-    ```
+```{literalinclude} ../material/6.packaging/solution/release-please-config.json
+:language: json
+```
 
-- `.release-please-manifest.json`
-    ```json
-    {
-        ".": "0.0.1"
-    }
-    ```
+```{literalinclude} ../material/6.packaging/solution/.release-please-manifest.json
+:language: json
+```
 
 :::{tip} `release-please-config.json`
 
@@ -275,47 +265,9 @@ Il y a ici deux ingrédients
 
 Voici à quoi ressemble l'action
 
-```yaml
-name: Publish on conda
-
-on:
-    pull_request:
-    release:
-        types: [published]
-    workflow_dispatch:
-
-jobs:
-    build:
-        runs-on: ${{ matrix.os }}
-        strategy:
-            fail-fast: false
-            matrix:
-                os:
-                    - ubuntu-latest
-                    - macos-15-intel
-                    - macos-latest
-                    - windows-latest
-        steps:
-            - uses: actions/checkout@v7
-
-            - uses: prefix-dev/setup-pixi@v0.11.3
-              with:
-                  pixi-version: v0.84.1
-                  run-install: false
-
-            - name: Read the version
-              shell: bash
-              run: echo "VERSION=$(cat version.txt)" >> "$GITHUB_ENV"
-
-            - name: Build the package
-              run: pixi exec rattler-build build --recipe recipe --output-dir output
-
-            - name: Upload on anaconda.org
-              if: github.event_name == 'release'
-              shell: bash
-              env:
-                  ANACONDA_API_KEY: ${{ secrets.ANACONDA_TOKEN }}
-              run: pixi exec rattler-build upload anaconda --owner votre_compte output/*/splinart-cpp-*.conda
+```{literalinclude} ../material/6.packaging/solution/.github/workflows/conda.yml
+:language: yaml
+:caption: .github/workflows/conda.yml
 ```
 
 Plusieurs remarques
@@ -340,3 +292,7 @@ Plusieurs remarques
 Si la pull request arrive à construire le paquet conda, vous pouvez fusionner cette branche dans la branche principale.
 
 Testez cette action en créant au préalable une nouvelle version : c'est-à-dire en exécutant deux fois l'action `release-please` (une fois pour créer une pull request avec le changelog et la montée de version et une deuxième fois pour créer le tag et l'archive).
+
+:::{important}
+La correction de cette partie se trouve dans le répertoire `material/6.packaging/solution`. Vous y trouverez notamment les workflows `semantic-pr.yml`, `release-please.yml` et `conda.yml`.
+:::
