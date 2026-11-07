@@ -145,16 +145,16 @@ Dans le cadre de cet atelier, nous souhaitons vérifier la liste suivante à cha
 - vérifier qu'il n'y a pas de fichiers qui sont en conflit de fusion (`check-merge-conflict`)
 - vérifie que l'on n'essaie pas de pousser dans la branche principale (`no-commit-to-branch`)
 - vérifier les caractères de fin de lignes et les rendre homogènes (`mixed-line-ending`)
-- remplacer les tabulations par des espaces (https://GitHub.com/Lucas-C/pre-commit-hooks)
-- vérifier que les changements sont bien compatibles avec le formatage souhaité décrit dans le fichier `.clang-format` (https://GitHub.com/pre-commit/mirrors-clang-format)
+- remplacer les tabulations par des espaces (https://github.com/Lucas-C/pre-commit-hooks)
+- vérifier que les changements sont bien compatibles avec le formatage souhaité décrit dans le fichier `.clang-format` (https://github.com/pre-commit/mirrors-clang-format)
 
 (pre_commit_target)=
 Voici à quoi ressemble le fichier `.pre-commit-config.yaml`
 
 ```yaml
 repos:
-  - repo: https://GitHub.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
@@ -162,20 +162,19 @@ repos:
       - id: trailing-whitespace
       - id: check-merge-conflict
       - id: check-yaml
-        exclude: conda/recipe/meta.yaml
       - id: check-json
       - id: no-commit-to-branch
       - id: mixed-line-ending
         args: ["--fix=lf"]
         description: Forces to replace line ending by the UNIX 'lf' character.
-  - repo: https://GitHub.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.1
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.6
     hooks:
       - id: forbid-tabs
       - id: remove-tabs
         args: [--whitespaces-count, "4"]
-  - repo: https://GitHub.com/pre-commit/mirrors-clang-format
-    rev: v15.0.7
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v21.1.8
     hooks:
       - id: clang-format
         files: .*\.[hc]pp$

@@ -6,9 +6,9 @@
 #include <array>
 
 #include <utility>
-#include <xtensor/xfixed.hpp>
+#include <xtensor/containers/xfixed.hpp>
 
-#include <xtensor/xtensor.hpp>
+#include <xtensor/containers/xtensor.hpp>
 
 namespace
 

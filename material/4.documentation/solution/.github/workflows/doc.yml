@@ -9,9 +9,9 @@ on:
             - main
     workflow_dispatch:
 
-# Allow one concurrent deployment
+# One run at a time per branch: a new push cancels the previous run of the same branch
 concurrency:
-    group: "pages"
+    group: pages-${{ github.ref }}
     cancel-in-progress: true
 
 jobs:

@@ -19,6 +19,11 @@ Checks: "*,
         -hicpp-named-parameter,
         -cppcoreguidelines-avoid-magic-numbers,
         -cppcoreguidelines-init-variables,
+        -boost-*,
+        -misc-include-cleaner,
+        -modernize-use-integer-sign-comparison,
+        -modernize-use-ranges,
+        -portability-avoid-pragma-once,
 "
 WarningsAsErrors: '*'
 HeaderFilterRegex: ''

@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 #include <splinart/shapes.hpp>
-#include <xtensor/xio.hpp>
+#include <xtensor/io/xio.hpp>
 
 class CircleTest : public testing::TestWithParam<xt::xtensor<double, 2>>
 {

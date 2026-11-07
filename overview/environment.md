@@ -75,23 +75,22 @@ pixi add cxx-compiler cmake
 À la fin de cette étape, nous avons deux nouveaux fichiers : `pixi.toml` et `pixi.lock`. Le contenu de `pixi.toml` est le suivant
 
 ```toml
-[project]
-name = "test-pixi"
-version = "0.1.0"
-description = "Add a short description here"
+[workspace]
 authors = ["Loic Gouarin <loic.gouarin@gmail.com>"]
 channels = ["conda-forge"]
+name = "test-pixi"
 platforms = ["osx-arm64"]
+version = "0.1.0"
 
 [tasks]
 
 [dependencies]
-cmake = "3.27.8.*"
-cxx-compiler = "1.6.0.*"
+cxx-compiler = ">=2.0.0,<3"
+cmake = ">=4.4.5,<5"
 ```
 
 :::{attention}
-Vous n'avez pas forcément la même plateforme. Les plateformes possibles sont : `win-64`, `linux-64`, `osx-64`, `osx-arm64`. Vous pouvez les ajouter au fur et à mesure. Il est également possible d'avoir un comportement différent en fonction de celle-ci ([Multi platform](https://pixi.sh/advanced/multi_platform_configuration/)).
+Vous n'avez pas forcément la même plateforme. Les plateformes possibles sont : `win-64`, `linux-64`, `osx-64`, `osx-arm64`. Vous pouvez les ajouter au fur et à mesure. Il est également possible d'avoir un comportement différent en fonction de celle-ci ([Multi platform](https://pixi.sh/latest/workspace/multi_platform_configuration/)).
 :::
 
 Comme dans le cas de nodejs avec le répertoire `node_modules`, vous avez à présent un répertoire `.pixi` dans lequel vous avez votre environnement conda.

@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include <xtensor/xfixed.hpp>
-#include <xtensor/xrandom.hpp>
-#include <xtensor/xtensor.hpp>
+#include <xtensor/containers/xfixed.hpp>
+#include <xtensor/containers/xtensor.hpp>
+#include <xtensor/generators/xrandom.hpp>
 
 #include "shapes.hpp"
 #include "spline.hpp"
@@ -17,17 +17,17 @@ namespace splinart
     ///
     /// @param img The image where we add pixels.
     ///
-    /// @param spline The coordinates of the pixels to add.
+    /// @param points The coordinates of the pixels to add.
     ///
     /// @param color Define the RGBA color of the pixels.
     ///
-    inline void draw_pixel(xt::xtensor<double, 3>& img, const xt::xtensor<double, 2>& spline, xt::xtensor_fixed<double, xt::xshape<4>> color)
+    inline void draw_pixel(xt::xtensor<double, 3>& img, const xt::xtensor<double, 2>& points, xt::xtensor_fixed<double, xt::xshape<4>> color)
     {
         const std::size_t width  = img.shape(0);
         const std::size_t height = img.shape(1);
 
-        auto xs      = xt::view(spline, xt::all(), 0);
-        auto ys      = xt::view(spline, xt::all(), 1);
+        auto xs      = xt::view(points, xt::all(), 0);
+        auto ys      = xt::view(points, xt::all(), 1);
         auto newxs   = xt::floor(xs * width);
         auto xs_mask = newxs >= 0 && newxs < width;
 

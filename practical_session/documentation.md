@@ -60,13 +60,13 @@ Vous devez configurer GitHub Pages en allant dans les `Settings` de votre dépô
 Vous devez également ajouter dans votre fichier `doc.yml`, les lignes suivantes
 
 ```yaml
-# Allow one concurrent deployment
+# One run at a time per branch: a new push cancels the previous run of the same branch
 concurrency:
-  group: "pages"
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 ```
 
-Ceci afin d'éviter que plusieurs actions essaient de générer le site en même temps.
+Ceci afin d'éviter que plusieurs actions essaient de générer le site en même temps pour une même branche. `github.ref` désigne la branche (ou la pull request) qui a déclenché le workflow : chaque pull request a son propre groupe, et une pull request n'annule jamais le travail d'une autre ni le déploiement de la branche principale.
 
 :::{note} Pour plus d'information
 [Using concurrency](https://docs.github.com/en/actions/using-jobs/using-concurrency)
