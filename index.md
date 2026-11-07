@@ -1,5 +1,5 @@
 ---
-title: Cadre de développement et automatisation pour l'open source
+title: Présentation
 ---
 
 Le développement de logiciels open source en simulation numérique prend une part de plus en plus importante dans le processus de recherche. Il permet de valider les méthodes numériques, de développer de nouveaux algorithmes et de permettre à n’importe qui de s’approprier les méthodes et de les enrichir. Ouvrir nos codes de recherche fait également partie de la démarche de science ouverte et il ne s’agit pas de “juste” mettre une archive avec les sources sur une page web.
