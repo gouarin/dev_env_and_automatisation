@@ -34,7 +34,13 @@ doxygen = "1.9.8.*"
 breathe = "4.35.0.*"
 myst-parser = "2.0.0.*"
 cppcheck = ">=2.6.2,<2.14"
+
+[feature.lint.dependencies]
 clang = "==15.0.7"
 
-[pypi-dependencies]
+[feature.lint.pypi-dependencies]
 compdb = ">=0.2.0, <0.3"
+
+[environments]
+default = { solve-group = "default" }
+lint = { features = ["lint"], solve-group = "default" }
