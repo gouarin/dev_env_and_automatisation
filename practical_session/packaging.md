@@ -90,6 +90,8 @@ Nous allons utiliser cette action : [release-please-action](https://github.com/m
 :language: json
 ```
 
+La clé `packages` indique que le projet à publier se trouve à la racine du dépôt (`.`). Ne l'oubliez pas : sans elle, release-please ne trouve rien à publier et se termine sans afficher d'erreur.
+
 :::{tip} `release-please-config.json`
 
 Si vous voulez comprendre ce que fait ce fichier de configuration, il vous suffit de vous rendre à [Manifest Driven release-please](https://github.com/googleapis/release-please/blob/main/docs/manifest-releaser.md).
@@ -111,12 +113,15 @@ Cette action se joue en deux temps.
 
 ::::{important}Utilisation d'un token
 
-Il est nécessaire de mettre un `token` pour qu'à la fin de la deuxième étape, une action de type `release` soit déclenchée. GitHub fait cela pour éviter les déclenchements cycliques. Il vous faut pour cela utiliser un [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Il faut aller dans la configuration de votre compte `Settings->Developer settings->Personal access tokens->Tokens`. Vous devez ensuite générer un nouveau token en cochent les cases suivantes
+Il est nécessaire de mettre un `token` pour qu'à la fin de la deuxième étape, une action de type `release` soit déclenchée. Les événements créés avec le token fourni par défaut à GitHub Actions (`GITHUB_TOKEN`) ne déclenchent pas d'autres workflows : GitHub évite ainsi les déclenchements en cascade. Il vous faut donc un [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) de type *fine-grained*, limité à votre dépôt.
 
-:::{figure} ./figures/personal-token.png
-:::
+Allez dans la configuration de votre compte `Settings->Developer settings->Personal access tokens->Fine-grained tokens` et cliquez sur `Generate new token`. Puis
 
-Vous devez ajouter ce token dans les `secrets` du dépôt en allant dans `Settings->Secrets and variables->Actions`. Vous l'appellerez `RELEASE_PLEASE`.
+- dans `Repository access`, choisissez `Only select repositories` et sélectionnez votre dépôt `splinart-cpp` ;
+- dans `Permissions`, donnez l'accès `Read and write` à `Contents` (pour créer les tags et les releases) et à `Pull requests` (pour ouvrir la pull request de version) ;
+- choisissez une date d'expiration : il faudra renouveler le token ensuite.
+
+Ajoutez ce token dans les `secrets` du dépôt en allant dans `Settings->Secrets and variables->Actions`. Vous l'appellerez `RELEASE_PLEASE`.
 
 ::::
 
