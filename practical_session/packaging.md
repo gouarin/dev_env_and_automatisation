@@ -80,13 +80,13 @@ Comment générer ce modèle de manière automatique sur notre dépôt ? En util
 
 Nous allons utiliser cette action : [release-please-action](https://github.com/marketplace/actions/release-please-action) qui utilise [release-please](https://github.com/googleapis/release-please).
 
-`release-please` a besoin de fichiers de configuration pour contrôler son comportement. Voici les deux fichiers à ajouter à la racine du dépôt
+`release-please` a besoin de fichiers de configuration pour contrôler son comportement. Voici les deux fichiers à ajouter à la racine du dépôt : vous les trouverez dans le répertoire `material/6.packaging/required_files`.
 
-```{literalinclude} ../material/6.packaging/solution/release-please-config.json
+```{literalinclude} ../material/6.packaging/required_files/release-please-config.json
 :language: json
 ```
 
-```{literalinclude} ../material/6.packaging/solution/.release-please-manifest.json
+```{literalinclude} ../material/6.packaging/required_files/.release-please-manifest.json
 :language: json
 ```
 
@@ -268,9 +268,9 @@ Il y a ici deux ingrédients
   Le nom du `secret` sera celui utilisé dans l'action.
   :::
 
-Voici à quoi ressemble l'action
+Voici à quoi ressemble l'action. Elle se trouve aussi dans le répertoire `material/6.packaging/required_files/.github/workflows`.
 
-```{literalinclude} ../material/6.packaging/solution/.github/workflows/conda.yml
+```{literalinclude} ../material/6.packaging/required_files/.github/workflows/conda.yml
 :language: yaml
 :caption: .github/workflows/conda.yml
 ```
@@ -299,5 +299,5 @@ Si la pull request arrive à construire le paquet conda, vous pouvez fusionner c
 Testez cette action en créant au préalable une nouvelle version : c'est-à-dire en exécutant deux fois l'action `release-please` (une fois pour créer une pull request avec le changelog et la montée de version et une deuxième fois pour créer le tag et l'archive).
 
 :::{important}
-La correction de cette partie se trouve dans le répertoire `material/6.packaging/solution`. Vous y trouverez notamment les workflows `semantic-pr.yml`, `release-please.yml` et `conda.yml`.
+La correction de cette partie, et de tout l'atelier, se trouve dans le dépôt [splinart-cpp](https://github.com/gouarin/splinart-cpp). Vous y trouverez notamment les workflows qui vérifient le titre des pull requests (`check-pr-title.yml`), créent les versions (`release-please.yml`) et publient le paquet conda (`publish.yml`).
 :::
