@@ -1,7 +1,7 @@
-[project]
+[workspace]
 name = "splinart"
 version = "0.1.0"
-description = "Add a short description here"
+description = "Generative art with circles and splines"
 authors = ["Loic Gouarin <loic.gouarin@gmail.com>"]
 channels = ["conda-forge"]
 platforms = ["linux-64", "win-64", "osx-64", "osx-arm64"]
@@ -18,18 +18,18 @@ test = { cmd = ".build/tests/test_splinart", depends-on = ["build_test"] }
 doc = { cmd = "cd doc; make html" }
 
 [dependencies]
-cxx-compiler = "1.6.0.*"
-cmake = "3.27.9.*"
-opencv = "4.8.1.*"
-cli11 = "2.3.2.*"
-xtensor = "0.24.7.*"
-ninja = "1.11.1.*"
-clang-tools = "15.0.7.*"
-clang-format = "15.0.7.*"
-pre-commit = "3.5.0.*"
-gtest = "1.14.0.*"
-sphinx = "6.2.1.*"
-pydata-sphinx-theme = "0.14.4.*"
-doxygen = "1.9.8.*"
-breathe = "4.35.0.*"
-myst-parser = "2.0.0.*"
+cxx-compiler = ">=2.0.0,<3"
+cmake = ">=4.4.5,<5"
+opencv = ">=5.0.0,<6"
+cli11 = ">=2.7.2,<3"
+xtensor = ">=0.27.1,<0.28"
+ninja = ">=1.13.2,<2"
+clang-tools = ">=21.1,<22"
+clang-format = ">=21.1,<22"
+pre-commit = ">=4.7.0,<5"
+gtest = ">=1.18.0,<2"
+sphinx = ">=8.2,<9"
+pydata-sphinx-theme = ">=0.24.0,<0.25"
+doxygen = ">=1.18.0,<2"
+breathe = ">=5.1.0,<6"
+myst-parser = ">=5.1.0,<6"

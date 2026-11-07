@@ -6,9 +6,9 @@
 #include <algorithm>
 #include <cmath>
 
-#include <xtensor/xio.hpp>
-#include <xtensor/xtensor.hpp>
-#include <xtensor/xview.hpp>
+#include <xtensor/containers/xtensor.hpp>
+#include <xtensor/io/xio.hpp>
+#include <xtensor/views/xview.hpp>
 
 using namespace xt::placeholders;
 

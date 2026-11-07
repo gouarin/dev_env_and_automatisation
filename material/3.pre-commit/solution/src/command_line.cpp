@@ -5,8 +5,8 @@
 #include <ctime>
 #include <fstream>
 
-#include <xtensor/xmath.hpp>
-#include <xtensor/xtensor.hpp>
+#include <xtensor/containers/xtensor.hpp>
+#include <xtensor/core/xmath.hpp>
 
 #include <CLI/CLI.hpp>
 #include <splinart/build_img.hpp>

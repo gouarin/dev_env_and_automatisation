@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <fstream>
 
-#include <xtensor/xmath.hpp>
-#include <xtensor/xtensor.hpp>
+#include <xtensor/containers/xtensor.hpp>
+#include <xtensor/core/xmath.hpp>
 
 #include <splinart/build_img.hpp>
 #include <splinart/imshow.hpp>
