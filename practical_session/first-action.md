@@ -63,7 +63,7 @@ Vous devriez maintenant avoir une action qui construit et teste l'application so
 
 ## Multi OS
 
-Tout a l'air de fonctionner sous linux, mais en est-il de même sur les autres OS. Pour s'en assurer, nous décidons d'ajouter macos.
+Tout a l'air de fonctionner sous Linux, mais en est-il de même sur les autres OS ? Pour s'en assurer, nous décidons d'ajouter macOS et Windows.
 
 Pour cela, nous allons utiliser la notion de matrice dans GitHub Actions qui permet de lancer l'ensemble des étapes pour différentes configurations.
 
@@ -102,6 +102,6 @@ Il est nécessaire de mettre 3.10 entre guillemets, car sinon l'intégration con
 
 Pour accéder aux éléments de la matrice, il suffit de faire `matrix.nom`. Vous pouvez définir la liste entre `[]` comme pour l'entrée `os` ou sous forme de tirets comme pour `py-version`.
 
-Modifiez votre workflow pour que celui-ci soit également testé sur macos.
+Modifiez votre workflow pour que celui-ci soit également testé sur macOS (`macos-latest`) et Windows (`windows-latest`).
 
 Une fois que tout fonctionne, vous pouvez faire un `Squash and merge`.

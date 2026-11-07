@@ -46,7 +46,7 @@ Pour modifier le comportement des pull requests, il suffit d'aller dans les `Set
 Nous en profiterons pour effacer automatiquement la branche qui a servi à la pull request une fois que celle-ci a été insérée à la branche principale en cochant la dernière case de la section `Pull Requests`.
 
 :::{tip}Choix du message
-Vous pouvez choisir quel message vous souhaitez pour le commit du *squash*. Nous avons choisi ici de prendre le titre de la pull request ainsi que sa description. Nous utiliserons ce message pour la construction du *changelog* en utilisant.
+Vous pouvez choisir quel message vous souhaitez pour le commit du *squash*. Nous avons choisi ici de prendre le titre de la pull request ainsi que sa description. Nous utiliserons ce message pour construire le *changelog* avec [release-please](https://github.com/googleapis/release-please).
 :::
 
 (conventional-commits)=

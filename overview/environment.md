@@ -22,7 +22,7 @@ Toutes les solutions décrites jusqu'ici s'appuient à un moment donné sur la p
 
 Les outils [Nix](https://nixos.org/) et [Guix](https://guix.gnu.org/) vont un cran plus loin. La reproductibilité fait partie intégrante de leur conception. Les deux outils s'appuient uniquement sur le noyau du système d'exploitation linux et fournissent donc l'intégralité de la pile logicielle. Ils stockent l'historique de toutes les recettes de compilation de tous les paquets qu'ils proposent et vous êtes ainsi assurés d'avoir le même environnement de développement au bit près demain et dans cinq ans. Si les versions binaires des paquets ne sont plus disponibles, il est toujours possible de tout recompiler. Ces systèmes sont intéressants pour un usage en calcul scientifique et notamment dans la mise en place d'environnements de développement et de production sur des machines HPC, ils sont assez simples d'utilisation. Ils ne fonctionnent cependant que sous linux et leur courbe d'apprentissage peut être assez raide lorsqu'il s'agit de d'écrire des paquets.
 
-Dans le cadre de cet atelier, nous allons utiliser [pixi](https://pixi.sh/) qui a vu le jour cette année. Il s'appuie sur conda mais gère la liste des dépendances à la manière de yarn ou cargo.
+Dans le cadre de cet atelier, nous allons utiliser [pixi](https://pixi.sh/), apparu en 2023. Il s'appuie sur conda mais gère la liste des dépendances à la manière de yarn ou cargo.
 
 (pixi)=
 ## pixi
@@ -66,7 +66,7 @@ pixi init test-pixi
 cd test-pixi
 ```
 
-Notre projet a plusieurs dépendances et nous allons les installer au fur et à mesure. L'application est écrite en C++ et nous choisirons [CMake](https://cmake.org/) pour compiler et installer celle-ci. Pour installer ces dépendances, il suffit d'utiliser la commande `add` de pxi.
+Notre projet a plusieurs dépendances et nous allons les installer au fur et à mesure. L'application est écrite en C++ et nous choisirons [CMake](https://cmake.org/) pour compiler et installer celle-ci. Pour installer ces dépendances, il suffit d'utiliser la commande `add` de pixi.
 
 ```bash
 pixi add cxx-compiler cmake

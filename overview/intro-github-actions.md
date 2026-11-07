@@ -91,7 +91,7 @@ Le [MarketPlace](https://github.com/marketplace?type=actions) est l'endroit où 
 Chaque action a généralement une documentation qui explique comment l'utiliser. Vous avez également un système d'étoiles comme sur GitHub qui vous permet de savoir si cette action est appréciée par la communauté.
 
 :::{note} Besoin d'aide
-Si vous avez besoin d'aide, le site GitHub qui y est consacré est très bien fait https://docs.github.com//actions.
+Si vous avez besoin d'aide, le site GitHub qui y est consacré est très bien fait https://docs.github.com/actions.
 
 Mais, nous devrions voir dans la suite assez de cas d'usages pour vous permettre de bien débuter.
 :::

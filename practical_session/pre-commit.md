@@ -10,7 +10,7 @@
 - Mettre des dépendances entre ces travaux
 :::
 
-Vous avez réussi à faire tourner les tests de votre application sur linux et macos en vous appuyant sur pixi. C'est chouette !! Il est temps de passer au packaging.
+Vous avez réussi à faire tourner les tests de votre application sur plusieurs OS en vous appuyant sur pixi. C'est chouette !!
 
 Mais, avez-vous eu la curiosité de regarder le code ? C'est une catastrophe : rien est indenté pareil, les noms des fonctions ne suivent aucune nomenclature. Si nous laissons les choses en l'état, tout le monde va y aller de sa petite touche et vous n'aurez plus jamais envie d'aller y jeter un œil. Heureusement, il y a quelques commentaires.
 
@@ -83,7 +83,7 @@ jobs:
 ```
 
 :::{note}
-Vous pouvez demander que le travail soit effectué même en cas d'échec en [ajoutant une condition](https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions#exemple--non-exigence-de-r%C3%A9ussite-de-travaux-d%C3%A9pendants). Mais nous ne le ferons pas ici.
+Vous pouvez demander que le travail soit effectué même en cas d'échec en [ajoutant une condition](https://docs.github.com/actions/reference/workflows-and-actions/workflow-syntax#example-not-requiring-successful-dependent-jobs). Mais nous ne le ferons pas ici.
 :::
 
 Modifiez votre processus pour qu'il ressemble à celui de la [](#needs-fig).
@@ -98,7 +98,7 @@ En plus du pre-commit, nous aimerions ajouter une analyse statique de notre code
 cmake -S . -B .build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=ON
 ```
 
-Cette commande va créer un fichier `.build/compile_command.json`. Il nous suffit à présent de lancer `cppcheck` via la commande
+Cette commande va créer un fichier `.build/compile_commands.json`. Il nous suffit à présent de lancer `cppcheck` via la commande
 
 ```bash
 cppcheck --enable=missingInclude,unusedFunction,warning,style,portability,performance -q --project=.build/compile_commands.json --suppressions-list=.cppcheck 2> cppcheck_err.txt
@@ -109,7 +109,13 @@ Le fichier `.cppcheck` est dans le répertoire `material/3.pre-commit/required_f
 :::
 
 :::{important}
-Si jamais, par inadvertance, une dépendance venait à manquer, n'hésitez pas à la rajouter en utilisant la commande `pixi add`.
+`cppcheck` ne fait pas encore partie de votre environnement. Ajoutez-le avec
+
+```bash
+pixi add cppcheck
+```
+
+et n'oubliez pas de commiter les fichiers `pixi.toml` et `pixi.lock` : c'est cet environnement que l'intégration continue va installer.
 :::
 
 Écrivez une étape qui exécute ces deux commandes en même temps. Nous lui donnerons le nom de `Configure`.
