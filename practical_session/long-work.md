@@ -26,6 +26,10 @@ Nous allons continuer à approfondir les possibilités de la section `on` qui d�
 
 Nous ne rentrerons pas ici dans les détails de la construction du cron. Il vous suffit de cliquer sur le lien donné plus haut pour en comprendre le fonctionnement.
 
+:::{attention}
+Sur un dépôt public, GitHub désactive automatiquement un workflow déclenché par `schedule` après 60 jours sans activité dans le dépôt. Le workflow ne tourne alors plus du tout, même sur les pull requests. Vous pouvez le réactiver dans l'onglet `Actions` du dépôt, ou avec la commande `gh workflow enable`.
+:::
+
 :::{note}
 N'oubliez pas de retourner dans la branche `main` et de faire
 

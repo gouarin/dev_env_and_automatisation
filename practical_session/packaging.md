@@ -80,25 +80,17 @@ Comment générer ce modèle de manière automatique sur notre dépôt ? En util
 
 Nous allons utiliser cette action : [release-please-action](https://github.com/marketplace/actions/release-please-action) qui utilise [release-please](https://github.com/googleapis/release-please).
 
-`release-please` a besoin de fichiers de configuration pour contrôler son comportement. Voici les deux fichiers à ajouter à la racine du dépôt
+`release-please` a besoin de fichiers de configuration pour contrôler son comportement. Voici les deux fichiers à ajouter à la racine du dépôt : vous les trouverez dans le répertoire `material/6.packaging/required_files`.
 
-- `release-please-config.json`
-    ```json
-    {
-        "release-type": "simple",
-        "include-component-in-tag": false,
-        "include-v-in-tag": true,
-        "changelog-path": "CHANGELOG.md",
-        "bump-minor-pre-major": true
-    }
-    ```
+```{literalinclude} ../material/6.packaging/required_files/release-please-config.json
+:language: json
+```
 
-- `.release-please-manifest.json`
-    ```json
-    {
-        ".": "0.0.1"
-    }
-    ```
+```{literalinclude} ../material/6.packaging/required_files/.release-please-manifest.json
+:language: json
+```
+
+La clé `packages` indique que le projet à publier se trouve à la racine du dépôt (`.`). Ne l'oubliez pas : sans elle, release-please ne trouve rien à publier et se termine sans afficher d'erreur.
 
 :::{tip} `release-please-config.json`
 
@@ -121,12 +113,15 @@ Cette action se joue en deux temps.
 
 ::::{important}Utilisation d'un token
 
-Il est nécessaire de mettre un `token` pour qu'à la fin de la deuxième étape, une action de type `release` soit déclenchée. GitHub fait cela pour éviter les déclenchements cycliques. Il vous faut pour cela utiliser un [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Il faut aller dans la configuration de votre compte `Settings->Developer settings->Personal access tokens->Tokens`. Vous devez ensuite générer un nouveau token en cochent les cases suivantes
+Il est nécessaire de mettre un `token` pour qu'à la fin de la deuxième étape, une action de type `release` soit déclenchée. Les événements créés avec le token fourni par défaut à GitHub Actions (`GITHUB_TOKEN`) ne déclenchent pas d'autres workflows : GitHub évite ainsi les déclenchements en cascade. Il vous faut donc un [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) de type *fine-grained*, limité à votre dépôt.
 
-:::{figure} ./figures/personal-token.png
-:::
+Allez dans la configuration de votre compte `Settings->Developer settings->Personal access tokens->Fine-grained tokens` et cliquez sur `Generate new token`. Puis
 
-Vous devez ajouter ce token dans les `secrets` du dépôt en allant dans `Settings->Secrets and variables->Actions`. Vous l'appellerez `RELEASE_PLEASE`.
+- dans `Repository access`, choisissez `Only select repositories` et sélectionnez votre dépôt `splinart-cpp` ;
+- dans `Permissions`, donnez l'accès `Read and write` à `Contents` (pour créer les tags et les releases) et à `Pull requests` (pour ouvrir la pull request de version) ;
+- choisissez une date d'expiration : il faudra renouveler le token ensuite.
+
+Ajoutez ce token dans les `secrets` du dépôt en allant dans `Settings->Secrets and variables->Actions`. Vous l'appellerez `RELEASE_PLEASE`.
 
 ::::
 
@@ -273,49 +268,11 @@ Il y a ici deux ingrédients
   Le nom du `secret` sera celui utilisé dans l'action.
   :::
 
-Voici à quoi ressemble l'action
+Voici à quoi ressemble l'action. Elle se trouve aussi dans le répertoire `material/6.packaging/required_files/.github/workflows`.
 
-```yaml
-name: Publish on conda
-
-on:
-    pull_request:
-    release:
-        types: [published]
-    workflow_dispatch:
-
-jobs:
-    build:
-        runs-on: ${{ matrix.os }}
-        strategy:
-            fail-fast: false
-            matrix:
-                os:
-                    - ubuntu-latest
-                    - macos-15-intel
-                    - macos-latest
-                    - windows-latest
-        steps:
-            - uses: actions/checkout@v7
-
-            - uses: prefix-dev/setup-pixi@v0.11.3
-              with:
-                  pixi-version: v0.84.1
-                  run-install: false
-
-            - name: Read the version
-              shell: bash
-              run: echo "VERSION=$(cat version.txt)" >> "$GITHUB_ENV"
-
-            - name: Build the package
-              run: pixi exec rattler-build build --recipe recipe --output-dir output
-
-            - name: Upload on anaconda.org
-              if: github.event_name == 'release'
-              shell: bash
-              env:
-                  ANACONDA_API_KEY: ${{ secrets.ANACONDA_TOKEN }}
-              run: pixi exec rattler-build upload anaconda --owner votre_compte output/*/splinart-cpp-*.conda
+```{literalinclude} ../material/6.packaging/required_files/.github/workflows/conda.yml
+:language: yaml
+:caption: .github/workflows/conda.yml
 ```
 
 Plusieurs remarques
@@ -340,3 +297,7 @@ Plusieurs remarques
 Si la pull request arrive à construire le paquet conda, vous pouvez fusionner cette branche dans la branche principale.
 
 Testez cette action en créant au préalable une nouvelle version : c'est-à-dire en exécutant deux fois l'action `release-please` (une fois pour créer une pull request avec le changelog et la montée de version et une deuxième fois pour créer le tag et l'archive).
+
+:::{important}
+La correction de cette partie, et de tout l'atelier, se trouve dans le dépôt [splinart-cpp](https://github.com/gouarin/splinart-cpp). Vous y trouverez notamment les workflows qui vérifient le titre des pull requests (`check-pr-title.yml`), créent les versions (`release-please.yml`) et publient le paquet conda (`publish.yml`).
+:::
