@@ -37,4 +37,5 @@ jobs:
                   compdb -p build list > compile_commands.json
 
             - name: run clang-tidy on splinart-cpp
-              run: pixi run -e lint run-clang-tidy
+              shell: pixi run -e lint bash {0}
+              run: run-clang-tidy -extra-arg=-isystem$CONDA_PREFIX/include

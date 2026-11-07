@@ -96,7 +96,7 @@ Plutôt que de les ajouter à l'environnement de tout le projet, nous allons cr�
 
 ```toml
 [feature.lint.dependencies]
-clang = "==15.0.7"
+clang = ">=21.1,<22"
 
 [feature.lint.pypi-dependencies]
 compdb = ">=0.2.0,<0.3"
@@ -116,7 +116,7 @@ puis lancez `pixi lock` pour mettre à jour `pixi.lock`.
 Vous pouvez obtenir le même résultat en ligne de commande
 
 ```bash
-pixi add --feature lint "clang==15.0.7"
+pixi add --feature lint "clang>=21.1,<22"
 pixi add --feature lint --pypi compdb
 pixi workspace environment add lint --feature lint --solve-group default
 pixi workspace environment add default --solve-group default --force
@@ -150,7 +150,7 @@ Il reste à créer le travail qui se déclenche uniquement si le nombre de commi
       - name: run clang-tidy
         shell: pixi run -e lint bash {0}
         run: |
-          run-clang-tidy
+          run-clang-tidy -extra-arg=-isystem$CONDA_PREFIX/include
 ```
 
 :::{attention}
@@ -162,6 +162,7 @@ La partie `Configure` est propre au projet. Il nous faut un certain nombre d'inf
 :::{note}Remarques
 - Nous n'avons pas installé `clang-tidy` car il est déjà installé par `pixi` via le paquet `clang-tools`.
 - `run-clang-tidy` fait partie de ce paquet. Il permet d'exécuter `clang-tidy` à partir du fichier `compile_commands.json`.
+- Le compilateur gcc de conda-forge trouve tout seul les en-têtes installés dans l'environnement (xtensor, OpenCV...). CMake ne les écrit donc pas dans `compile_commands.json`, et `clang-tidy` ne les trouverait pas. L'option `-extra-arg=-isystem$CONDA_PREFIX/include` les lui indique : `CONDA_PREFIX` est le chemin de l'environnement pixi actif.
 - Nous ne détaillons pas la configuration contenue dans le fichier `.clang-tidy`. Ouvrez-le pour voir les règles activées.
 :::
 
