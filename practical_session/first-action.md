@@ -35,7 +35,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
 ```
 
@@ -82,12 +82,12 @@ jobs:
           - 3.12
     steps:
       - name: Set up Python ${{ matrix.py-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.py-version }}
 ```
 
-La matrice est décrite dans la partie `strategy` grâce au mot clé `matrix`. Les travaux qui seront exécuter sont les suivants
+La matrice est décrite dans la partie `strategy` grâce au mot clé `matrix`. Les travaux qui seront exécutés sont les suivants
 
 - {os: ubuntu-latest, py-version: 3.10}
 - {os: macos-latest, py-version: 3.10}

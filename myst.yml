@@ -10,18 +10,30 @@ project:
   license:
     code: MIT
     content: CC-BY-4.0
-  # thumbnail: logo-wide.svg
+  toc:
+    - file: index.md
+    - title: Tour d'horizon
+      children:
+        - file: overview/environment.md
+        - file: overview/communication.md
+        - file: overview/pre-commit.md
+        - file: overview/depot.md
+        - file: overview/intro-github-actions.md
+    - title: Mise en pratique
+      children:
+        - file: practical_session/initialisation.md
+        - file: practical_session/first-action.md
+        - file: practical_session/pre-commit.md
+        - file: practical_session/documentation.md
+        - file: practical_session/long-work.md
+        - file: practical_session/packaging.md
+    - title: Conclusion
+      children:
+        - file: conclusion.md
 
 site:
   template: book-theme
   title: "Cadre de développement et automatisation pour l'open source"
-  # logo: Logo_noir.png
-  # nav:
-  #   - title: test
-  #     children:
-  #       - title: dépot
-  #         url: /depot
-  # actions:
-  #   - title: Learn More
-  #     url: https://mystmd.org/guide
+  options:
+    logo_text: "Développement et automatisation"
   domains: []

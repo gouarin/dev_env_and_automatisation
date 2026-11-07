@@ -77,7 +77,7 @@ Nous avons montré en exemple une action très simple qui exécutait une ligne d
     ...
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
 ```
 
