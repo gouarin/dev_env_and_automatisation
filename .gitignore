@@ -3,3 +3,5 @@ _build
 .pixi
 .DS_Store
 *.egg-info
+__pycache__
+.pytest_cache
