@@ -84,7 +84,7 @@ GitHub Actions propose de définir des sorties : [Defining outputs for jobs](htt
       - uses: actions/checkout@v7
 
       - id: new_commits
-        run: echo "nb_commits=$(git log --oneline --since '24 hours ago' | wc -l)" >> $GITHUB_OUTPUT
+        run: echo "nb_commits=$(git log --oneline --since '24 hours ago' | wc -l)" >> "$GITHUB_OUTPUT"
 ```
 
 `id` permet de faire référence au travail dans d'autres sections comme c'est le cas dans `outputs`. `GITHUB_OUTPUT` est l'endroit où vous mettez ce que vous souhaitez exporter sous forme de clé/valeur. La section `outputs` définit ce qui sera réellement exporté et accessible par les autres travaux.

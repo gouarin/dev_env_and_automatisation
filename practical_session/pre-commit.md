@@ -136,6 +136,10 @@ then
 fi
 ```
 
+:::{note}
+Le premier passage de `cppcheck` échoue : dans `include/splinart/spline.hpp`, la variable `unused` reçoit une valeur qui n'est jamais utilisée. C'est ce genre d'erreur que l'outil doit trouver. Supprimez la ligne et relancez le travail. Une correction se trouve dans `material/3.pre-commit/solution`.
+:::
+
 Vérifiez que tout fonctionne bien en ayant à présent le schéma suivant
 
 ![](./figures/ci-yml-3.png)

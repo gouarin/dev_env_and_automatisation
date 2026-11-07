@@ -1,0 +1,91 @@
+name: Replay the practical session
+
+on:
+    pull_request:
+        paths:
+            - "material/**"
+            - "practical_session/**"
+            - "overview/**"
+            - "tests/replay/**"
+            - "pixi.toml"
+            - "pixi.lock"
+            - ".github/workflows/**"
+    # Every Monday: catches what breaks without a change here (new tool versions, retired actions...)
+    schedule:
+        - cron: "0 5 * * 1"
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: replay-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    material:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                  persist-credentials: false
+
+            - uses: prefix-dev/setup-pixi@v0.11.3
+              with:
+                  pixi-version: v0.84.1
+                  environments: replay
+                  cache: true
+
+            - name: Check the files of material/ and lint the workflows
+              run: pixi run -e replay pytest tests/replay -v -k material
+
+    steps:
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+        strategy:
+            fail-fast: false
+            matrix:
+                step: [step1, step3, step4, step5, step6]
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                  persist-credentials: false
+
+            - uses: prefix-dev/setup-pixi@v0.11.3
+              with:
+                  pixi-version: v0.84.1
+                  environments: replay
+                  cache: true
+
+            - name: Replay ${{ matrix.step }}
+              run: pixi run -e replay pytest tests/replay -v -k "$STEP"
+              env:
+                  STEP: ${{ matrix.step }}
+
+    # Outside pull requests, nobody watches the run: keep one issue open while the replay fails.
+    report:
+        needs: [material, steps]
+        if: always() && github.event_name != 'pull_request'
+        runs-on: ubuntu-latest
+        permissions:
+            issues: write
+        env:
+            GH_TOKEN: ${{ github.token }}
+            GH_REPO: ${{ github.repository }}
+            TITLE: "Le rejeu de la formation échoue"
+            RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            FAILED: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        steps:
+            - name: Open, update or close the replay issue
+              run: |
+                  issue=$(gh issue list --state open --label replay --json number --jq '.[0].number // empty')
+                  if [[ "$FAILED" == "true" ]]; then
+                    if [[ -n "$issue" ]]; then
+                      gh issue comment "$issue" --body "Toujours en échec : $RUN_URL"
+                    else
+                      gh label create replay --color D93F0B --description "Rejeu automatique de la formation" --force
+                      gh issue create --title "$TITLE" --label replay --body "Le rejeu automatique a échoué : $RUN_URL"
+                    fi
+                  elif [[ -n "$issue" ]]; then
+                    gh issue close "$issue" --comment "Le rejeu passe de nouveau : $RUN_URL"
+                  fi
